@@ -18,7 +18,7 @@ public class GoodController {
     GoodService goodService;
     @GetMapping
     public List<Good> getAll(){
-        log.info("Show all");
+        log.info("=====>Мы в методе getAll GoodController-а<=====");
         List<Good> goods = goodService.findAll();
         return goods;
     }
@@ -38,6 +38,7 @@ public class GoodController {
     @CrossOrigin
     @GetMapping("/select/{id}")
     public Good selectOne(@PathVariable("id") int id){
+        log.info("=====>Мы в методе selectOne GoodController-а<=====");
         Good good =goodService.select(id);
         return good;
     }

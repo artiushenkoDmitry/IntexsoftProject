@@ -19,7 +19,7 @@ public class RoleController {
 
     @GetMapping
     public List<Role> getAll() {
-        log.info("Show all");
+        log.info("=====> Мы в методе getAll RoleController-а <=====");
         List<Role> roles = roleService.findAll();
         return roles;
     }

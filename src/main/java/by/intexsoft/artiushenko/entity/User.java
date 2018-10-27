@@ -20,7 +20,7 @@ public class User extends AbstractPersistable<Integer> {
 
 //    @Column(name = "fk_user_role")
 //    private int fk_user_role;
-    @ManyToOne(/*cascade = CascadeType.ALL, fetch = FetchType.LAZY*/)
+    @ManyToOne(/*cascade = CascadeType.ALL fetch = FetchType.LAZY*/)
     @JoinColumn(name="fk_user_role")
     private Role role;
 

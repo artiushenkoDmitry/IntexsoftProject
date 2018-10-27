@@ -21,8 +21,9 @@ public class UserController {
 
     @GetMapping
     public List<User> getAll() {
-        log.info("Show all");
+        log.info("=====>Мы в методе getAll UserController-а<=====");
         List<User> users = userService.findAll();
+        log.info("=====>users<====="+users);
         return users;
     }
 
@@ -41,6 +42,7 @@ public class UserController {
     @CrossOrigin
     @GetMapping("/select/{id}")
     public User selectOne(@PathVariable("id") int id) {
+    log.info("=====>Мы в методе selectOne UserController-а<=====");
         User user = userService.select(id);
         return user;
     }

@@ -1,6 +1,5 @@
 package by.intexsoft.artiushenko.service;
 
-import by.intexsoft.artiushenko.entity.Good;
 import by.intexsoft.artiushenko.entity.User;
 import by.intexsoft.artiushenko.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
