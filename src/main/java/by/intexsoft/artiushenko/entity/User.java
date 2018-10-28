@@ -10,7 +10,7 @@ public class User extends AbstractPersistable<Integer> {
     @Column(length = 120, name="full_name")
     private String full_name;
 
-    @Column(length = 60,name = "name")
+    @Column(length = 60,name = "username")
     private String username;
 
     @Column(length = 60,name = "password")

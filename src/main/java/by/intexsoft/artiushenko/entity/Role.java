@@ -10,10 +10,6 @@ public class Role extends AbstractPersistable<Integer> {
     @Column(length = 60, name="type")
     private String type;
 
-
-//    @OneToMany(/*cascade = CascadeType.ALL, fetch = FetchType.LAZY,*/mappedBy="type")
-//    private List<User> users;
-
     public String getType() {
         return type;
     }
@@ -22,19 +18,10 @@ public class Role extends AbstractPersistable<Integer> {
         this.type = type;
     }
 
-//    public List<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(List<User> users) {
-//        this.users = users;
-//    }
-
     @Override
     public String toString() {
         return "Role{" +
                 "type='" + type + '\'' +
-//                ", users=" + users +
                 '}';
     }
 }

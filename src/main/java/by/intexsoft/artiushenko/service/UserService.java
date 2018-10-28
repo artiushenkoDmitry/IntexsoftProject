@@ -5,6 +5,8 @@ import by.intexsoft.artiushenko.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -15,7 +17,11 @@ public class UserService {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    private static Logger log = LoggerFactory.getLogger(UserService.class);
+
     public User findByUsername(String username) {
+        log.info("=====>Мы в методе findByUsername UserService-а <=====");
+        log.info("=====>username = "+username+" <=====");
         return userRepository.findByUsername(username);
     }
 

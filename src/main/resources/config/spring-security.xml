@@ -23,15 +23,4 @@
         </authentication-provider>
     </authentication-manager>
 
-    <!--<http auto-config="true">-->
-    <!--<intercept-url pattern="/api/**" access="hasRole('ROLE_USER')"/>-->
-    <!--</http>-->
-    <!--<authentication-manager alias="authenticationManager">-->
-    <!--<authentication-provider>-->
-    <!--<user-service>-->
-    <!--<user authorities="ROLE_USER" name="guest" password="guest"/>-->
-    <!--</user-service>-->
-    <!--</authentication-provider>-->
-    <!--</authentication-manager>-->
-
 </b:beans>
