@@ -19,6 +19,12 @@ public class UserController {
     @Autowired
     UserService userService;
 
+//    @PostMapping
+//    public User save(){
+//
+//        return null;
+//    }
+
     @GetMapping
     public List<User> getAll() {
         log.info("=====>Мы в методе getAll UserController-а<=====");

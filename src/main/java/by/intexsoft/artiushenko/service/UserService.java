@@ -21,7 +21,7 @@ public class UserService {
 
     public User findByUsername(String username) {
         log.info("=====>Мы в методе findByUsername UserService-а <=====");
-        log.info("=====>username = "+username+" <=====");
+        log.info("=====>username = " + username + " <=====");
         return userRepository.findByUsername(username);
     }
 
@@ -30,12 +30,16 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public List<User> findAll(){
+    public List<User> findAll() {
         List<User> list = userRepository.findAll();
         return list;
     }
 
+    //    public User create(User user) {
+//        return userRepository.save(user);
+//    }
     public User create(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 

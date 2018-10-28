@@ -34,9 +34,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         log.info("=====>Мы в методе loadUserByUsername UserDetailsServiceImpl-а 2 <=====");
         Set<GrantedAuthority> roles = new HashSet<>();
         log.info("=====>Мы в методе loadUserByUsername UserDetailsServiceImpl-а 3 <=====");
+        log.info("=====>role: "+user.getRole()+" <=====");
+        log.info("=====>role.type: "+user.getRole().getType()+" <=====");
         roles.add(new SimpleGrantedAuthority(user.getRole().getType()));
         log.info("=====>Мы в методе loadUserByUsername UserDetailsServiceImpl-а 4 <=====");
-
+        log.info("=====>full_name: "+user.getFull_name()+" <=====");
+        log.info("=====>username: "+user.getUsername()+" <=====");
+        log.info("=====>password: "+user.getPassword()+" <=====");
+        log.info("=====>role: "+user.getRole()+" <=====");
+        log.info("=====>role.type: "+user.getRole().getType()+" <=====");
+        log.info("=====>roles: "+roles+" <=====");
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
                         user.getPassword(),
                         roles);
