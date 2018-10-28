@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/role")
 public class RoleController {
-    private static Logger log = LoggerFactory.getLogger(GoodController.class);
+    private static Logger log = LoggerFactory.getLogger(RoleController.class);
     @Autowired
     RoleService roleService;
 

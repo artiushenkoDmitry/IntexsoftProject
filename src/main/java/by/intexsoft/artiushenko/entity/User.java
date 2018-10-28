@@ -3,8 +3,6 @@ package by.intexsoft.artiushenko.entity;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "t_user")
@@ -13,12 +11,12 @@ public class User extends AbstractPersistable<Integer> {
     private String full_name;
 
     @Column(length = 60,name = "name")
-    private String name;
+    private String username;
 
     @Column(length = 60,name = "password")
     private String password;
 
-//    @Column(name = "fk_user_role")
+//    @Column(username = "fk_user_role")
 //    private int fk_user_role;
     @ManyToOne(/*cascade = CascadeType.ALL fetch = FetchType.LAZY*/)
     @JoinColumn(name="fk_user_role")
@@ -32,12 +30,12 @@ public class User extends AbstractPersistable<Integer> {
         this.full_name = full_name;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -60,7 +58,7 @@ public class User extends AbstractPersistable<Integer> {
     public String toString() {
         return "User{" +
                 "full_name='" + full_name + '\'' +
-                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
                 '}';

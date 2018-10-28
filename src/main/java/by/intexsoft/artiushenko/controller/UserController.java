@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    private static Logger log = LoggerFactory.getLogger(GoodController.class);
+    private static Logger log = LoggerFactory.getLogger(UserController.class);
     @Autowired
     UserService userService;
 
@@ -23,7 +23,6 @@ public class UserController {
     public List<User> getAll() {
         log.info("=====>Мы в методе getAll UserController-а<=====");
         List<User> users = userService.findAll();
-        log.info("=====>users<====="+users);
         return users;
     }
 
