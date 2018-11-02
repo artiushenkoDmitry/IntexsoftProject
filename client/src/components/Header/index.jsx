@@ -1,5 +1,6 @@
 import React from "react";
 import {inject} from "mobx-react/index";
+import {Link} from 'react-router-dom';
 
 @inject('goodStore')
 class Header extends React.Component {
@@ -29,6 +30,8 @@ class Header extends React.Component {
 
 				<button onClick={() =>
 					this.addGood()}>Добавить товар</button>
+
+				<Link to='/users'>Пользователи</Link>
 			</div>
 		)
 	};

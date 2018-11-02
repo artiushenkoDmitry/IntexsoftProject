@@ -12,9 +12,8 @@
     "react-router-dom": "^4.3.1"
   },
   "scripts": {
-    "start": "cross-env HTTPS=false REACT_APP_API_URL=http://localhost:8080/internet/  react-scripts start",
+    "start": "cross-env HTTPS=false REACT_APP_API_URL=http://localhost:8080/internetShop/ react-scripts start",
     "build": "react-scripts build"
   },
-  "homepage": "http://myname.github.io/internet"
+  "homepage": "http://myname.github.io/internetShop"
 }
-
