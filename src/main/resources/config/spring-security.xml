@@ -8,16 +8,16 @@
     <b:bean id="userDetailsServiceImpl" class="by.intexsoft.artiushenko.service.UserDetailsServiceImpl"/>
 
     <http authentication-manager-ref="manager" auto-config="true" use-expressions="true">
-        <intercept-url pattern="/api/user**" access="hasAnyRole('ROLE_SALESMAN', 'ROLE_HEADMASTER')"/>
-        <intercept-url pattern="/api/role**" access="hasRole('ROLE_HEADMASTER')"/>
+        <intercept-url pattern="/api/director**" access="hasAnyRole('ROLE_SALESMAN', 'ROLE_HEADMASTER')"/>
+        <intercept-url pattern="/api/salesman**" access="hasRole('ROLE_HEADMASTER')"/>
         <intercept-url pattern="/api/**" access="permitAll"/>
         <csrf disabled="true"/>
         <security:form-login login-processing-url="/login"
                              username-parameter="username"
                              password-parameter="password"
-                             default-target-url='/api/'/>
+                             default-target-url="/#/welcome"/>
         <security:logout logout-url="/logout"
-                         logout-success-url="/api/"/>
+                         logout-success-url="/#/welcome"/>
     </http>
 
     <b:bean id="encoder"

@@ -45,15 +45,16 @@ export default class AuthStore {
             formData.push(encodedKey + '=' + encodedValue);
         }
         formData = formData.join('&');
+        console.log('formData: ',formData);
         const params = {
             method: 'POST',
             body: formData,
             headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
         };
         fetch(CONTEXT_URL + 'login', params)
-            .then(response => response.json())
+            .then(response => response.text())
             .then(action(user => {
-                this.user = user;
+             this.user = user;
             }))
             .catch(e => {
                 console.log(e);

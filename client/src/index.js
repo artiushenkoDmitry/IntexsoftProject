@@ -6,8 +6,13 @@ import {Provider} from 'mobx-react';
 import Main from './components/Main';
 import GoodStore from "./stores/GoodStore";
 import UserStore from "./stores/UserStore";
+import VendorCodeStore from './stores/VendorCodeStore';
+import AuthStore from './stores/AuthStore';
 
-const stores = {goodStore: new GoodStore(), userStore: new UserStore()};
+const stores = {goodStore: new GoodStore(),
+                userStore: new UserStore(), 
+                vendorCodeStore: new VendorCodeStore(),
+                authStore: new AuthStore()};
 
 ReactDOM.render(
     <Provider {...stores}>

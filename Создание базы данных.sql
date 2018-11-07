@@ -20,8 +20,8 @@ CREATE TABLE dev.t_role
 );
 
 --Наполняем таблицы данными
-INSERT INTO dev.t_role VALUES (1, 'ROLE_USER');
-INSERT INTO dev.t_role VALUES (2, 'ROLE_ADMIN');
+INSERT INTO dev.t_role VALUES (1, 'ROLE_SALESMAN');
+INSERT INTO dev.t_role VALUES (2, 'ROLE_HEADMASTER');
 select * from dev.t_role;
 
 INSERT INTO dev.t_user VALUES ('Иммануил Гедеонович', 'user3', '$2a$10$yJjyRJlY8uLymg1eLfOateIvBrP69MV29XrkFO7m9VCnEDP5XfQAO', 2);

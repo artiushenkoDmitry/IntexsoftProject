@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "react-bootstrap": "^0.32.4",
     "babel-cli": "^6.26.0",
     "custom-react-scripts": "0.2.2",
     "mobx": "^5.5.0",
