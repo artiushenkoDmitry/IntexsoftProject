@@ -4,19 +4,18 @@ import {observable, action} from "mobx";
  * Ссылка адрес, откуда стоит загружать данные.
  * @type {string}
  */
-//const GOODS_URL = 'http://127.0.0.1:8080/internet/api/';
 const CONTEXT_URL = process.env.REACT_APP_API_URL || '';
-const GOODS_URL = CONTEXT_URL + 'api/vendorCode/';
+const GOODS_URL = CONTEXT_URL + 'api/vendorCode/sportswear/';
 
 /**
  * Является экспортируемым классом и используется в index.js .
  */
-export default class VendorCodeStore {
+export default class SportswearStore {
     @observable
-    vcode = null;
+    sportswear = null;
 
     @observable
-    vcodes = [];
+    sportsweares = [];
 
     /**
      * Создание записи непосредственно на DOM-странице приложения.
@@ -24,12 +23,12 @@ export default class VendorCodeStore {
     create() {
         const params = {
             method: 'POST',
-            body: JSON.stringify(VendorCodeStore.generate()),
+            body: JSON.stringify(SportswearStore.generate()),
             headers: {'Content-Type': 'application/json'}
         };
         fetch(GOODS_URL, params)
             .then(response => response.json())
-            .then(action(vcode => this.vcodes.push(vcode)))
+            .then(action(sportswear => this.sportsweares.push(sportswear)))
             .catch(e => console.log(e));
     }
 
@@ -51,9 +50,9 @@ export default class VendorCodeStore {
      */
     @action
     deleteHandler(identity) {
-        const itemIndex = this.vcodes.findIndex(({id}) => id === identity);
+        const itemIndex = this.sportsweares.findIndex(({id}) => id === identity);
         if (itemIndex > -1) {
-            this.vcodes.splice(itemIndex, 1);
+            this.sportsweares.splice(itemIndex, 1);
         }
     }
 
@@ -63,7 +62,7 @@ export default class VendorCodeStore {
     loadAll() {
         fetch(GOODS_URL)
             .then(response => response.json())
-            .then(action(vcodes => this.vcodes = vcodes))
+            .then(action(sportsweares => this.sportsweares = sportsweares))
             .catch(error => console.error(error.message))
     }
 
@@ -74,12 +73,12 @@ export default class VendorCodeStore {
     load(identity) {
         fetch(GOODS_URL + 'select/' + identity)
             .then(response => response.json())
-            .then(action(vcode => this.vcode = vcode))
+            .then(action(sportswear => this.sportswear = sportswear))
             .catch(error => console.error(error.message));
     }
 
     deselect(){
-        this.vcode = null;
+        this.sportswear = null;
     }
 
 }

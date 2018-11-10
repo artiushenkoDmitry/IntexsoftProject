@@ -28,18 +28,18 @@ export default class Vcode extends React.Component {
             <div>
                 {/* id: {vcode && vcode.id || 'Ошибка загрузки...'}
                 <br /> */}
-                available quantuty: {vcode && vcode.quantityAvailable || 'Ошибка загрузки...'}
+                Доступное количество: {vcode && vcode.quantityAvailable || 'Загрузка...'}
                 <br />
-                prise: {vcode && vcode.prise || 'Ошибка загрузки...'}
+                Стоимость: {vcode && vcode.prise || 'Загрузка...'}
                 <br />
-                brand: {vcode && vcode.brand.brandName || 'Ошибка загрузки...'}
+                Бренд: {vcode && vcode.brand.brandName || 'Загрузка...'}
                 <br/>
-                type: {vcode && vcode.type.typeName || 'Загрузка...'}
+                Тип: {vcode && vcode.type.typeName || 'Загрузка...'}
                 <br/>
-                age-gender: {vcode && vcode.ageGender.ageGender || 'Загрузка...'}
+                Пол: {vcode && vcode.ageGender.ageGender || 'Загрузка...'}
                 <br/>
                 <Link to="/welcome">Назад</Link>
-                {/* {console.log(JSON.stringify(vcode))} */}
+                 {/* {console.log(JSON.stringify(vcode))}  */}
             </div>
         );
     }

@@ -30,13 +30,19 @@ class Header extends React.Component {
 					<Navbar.Brand>
 						<a href="#/welcome">НА ГЛАВНУЮ</a>
 					</Navbar.Brand>
+					<Navbar.Brand>
+						<a href="#/director">Сюда имеет доступ директор</a>
+					</Navbar.Brand>
+					<Navbar.Brand>
+						<a href="#/salesman">Сюда имеет доступ продавцы</a>
+					</Navbar.Brand>
 					<Navbar.Toggle />
 				</Navbar.Header>
 				<Navbar.Collapse>
 					<Nav pullRight>
 						<NavItem eventKey={1} href="#/login">
 							Login
-     			 </NavItem>
+     			 		</NavItem>
 						<NavItem eventKey={1} href="#">
 							Корзина
      			 </NavItem>

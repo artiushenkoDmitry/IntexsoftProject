@@ -17,6 +17,12 @@ public class TypeController {
     @Autowired
     TypeService typeService;
 
+    @GetMapping("/sel")
+    public String sele() {
+        String type = typeService.getTest();
+        return type;
+    }
+
     @GetMapping
     public List<Type> getAll() {
         List<Type> types = typeService.findAll();

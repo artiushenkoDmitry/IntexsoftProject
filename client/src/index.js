@@ -8,11 +8,21 @@ import GoodStore from "./stores/GoodStore";
 import UserStore from "./stores/UserStore";
 import VendorCodeStore from './stores/VendorCodeStore';
 import AuthStore from './stores/AuthStore';
+import TypeStore from './stores/TypeStore';
+import JeansStore from './stores/JeansStore';
+import ShirtStore from './stores/ShirtStore';
+import ShoesStore from './stores/ShoesStore';
+import SportswearStore from './stores/SportswearStore';
 
 const stores = {goodStore: new GoodStore(),
                 userStore: new UserStore(), 
                 vendorCodeStore: new VendorCodeStore(),
-                authStore: new AuthStore()};
+                authStore: new AuthStore(),
+                typeStore: new TypeStore(),
+                jeansStore: new JeansStore(),
+                shirtStore: new ShirtStore(),
+                shoesStore: new ShoesStore(),
+                sportswearStore: new SportswearStore()};
 
 ReactDOM.render(
     <Provider {...stores}>

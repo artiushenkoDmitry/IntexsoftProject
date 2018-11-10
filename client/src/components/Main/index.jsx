@@ -8,6 +8,10 @@ import Users from "../Users";
 import Welcome from "../Welcome";
 import Vcode from "../Vcode";
 import Login from "../Login";
+import Jeanses from "../Jeanses";
+import Shoes from "../Shoes";
+import Shirtes from "../Shirtes";
+import Sportsweares from "../Sportsweares";
 
 class Main extends React.Component {
 
@@ -20,8 +24,12 @@ class Main extends React.Component {
                     <Route exact path='/welcome' component={Welcome}/>
                     <Route exact path='/users' component={Users}/>
                     <Route exact path='/goods' component={Goods}/>
-                    <Route exact path='/goods/:id' render={props => <Good {...props}/>}/>
+                    {/* <Route exact path='/goods/:id' render={props => <Good {...props}/>}/> */}
                     <Route exact path='/vcodes/:id' render={props => <Vcode {...props}/>}/>
+                    <Route exact path='/types/2' render={props => <Jeanses {...props}/>}/>
+                    <Route exact path='/types/1' render={props => <Shoes {...props}/>}/>
+                    <Route exact path='/types/4' render={props => <Sportsweares {...props}/>}/>
+                    <Route exact path='/types/3' render={props => <Shirtes {...props}/>}/>
                     <Route path='*' component={() => <Redirect to={{pathname: '/welcome'}}/>}/>
                 </Switch>
 			</div>

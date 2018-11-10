@@ -29,4 +29,7 @@ public class TypeService {
         return typeRepository.findById(id).get();
     }
 
+    public String getTest(){
+        return typeRepository.sel();
+    }
 }

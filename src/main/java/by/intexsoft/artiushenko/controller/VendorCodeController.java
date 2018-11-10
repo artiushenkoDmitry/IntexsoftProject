@@ -19,6 +19,26 @@ public class VendorCodeController {
     @Autowired
     VendorCodeService vendorCodeService;
 
+    @GetMapping("/shoes")
+    public List<VendorCode> getShoesList() {
+        return vendorCodeService.getShoesList();
+    }
+
+    @GetMapping("/jeans")
+    public List<VendorCode> getJeansList() {
+        return vendorCodeService.getJeansList();
+    }
+
+    @GetMapping("/sportswear")
+    public List<VendorCode> getSportswearList() {
+        return vendorCodeService.getSportswearList();
+    }
+
+    @GetMapping("/shirt")
+    public List<VendorCode> getShirtList() {
+        return vendorCodeService.getShirtList();
+    }
+
     @GetMapping
     public List<VendorCode> getAll() {
         List<VendorCode> vendorCodes = vendorCodeService.findAll();

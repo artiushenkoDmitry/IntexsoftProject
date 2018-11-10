@@ -16,11 +16,11 @@ public class VendorCode extends AbstractPersistable<Integer>{
     @JoinColumn(name="fk_vendor_code_brand")
     private Brand brand;
 
-    @ManyToOne(cascade = CascadeType.REMOVE /*fetch = FetchType.EAGER*/)
+    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JoinColumn(name="fk_vendor_code_type")
     private Type type;
 
-    @ManyToOne(cascade = CascadeType.REMOVE /*fetch = FetchType.EAGER*/)
+    @ManyToOne(cascade = CascadeType.REMOVE/*, fetch = FetchType.LAZY*/)
     @JoinColumn(name="fk_vendor_code_age_gender")
     private AgeGender ageGender;
 
