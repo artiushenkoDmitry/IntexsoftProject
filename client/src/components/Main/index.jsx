@@ -12,6 +12,9 @@ import Jeanses from "../Jeanses";
 import Shoes from "../Shoes";
 import Shirtes from "../Shirtes";
 import Sportsweares from "../Sportsweares";
+import Orders from "../Orders";
+import Order from "../Order";
+import Headmaster from "../Headmaster";
 
 class Main extends React.Component {
 
@@ -24,7 +27,10 @@ class Main extends React.Component {
                     <Route exact path='/welcome' component={Welcome}/>
                     <Route exact path='/users' component={Users}/>
                     <Route exact path='/goods' component={Goods}/>
+                    <Route exact path='/basket' component={Orders}/>
+                    <Route exact path='/headmster' component={Headmaster}/>
                     {/* <Route exact path='/goods/:id' render={props => <Good {...props}/>}/> */}
+                    <Route exact path='/orders/:id' render={props => <Order {...props}/>}/>
                     <Route exact path='/vcodes/:id' render={props => <Vcode {...props}/>}/>
                     <Route exact path='/types/2' render={props => <Jeanses {...props}/>}/>
                     <Route exact path='/types/1' render={props => <Shoes {...props}/>}/>

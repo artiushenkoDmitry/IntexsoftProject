@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name = "t_user")
 public class User extends AbstractPersistable<Integer> {
     @Column(length = 120, name="full_name")
-    private String full_name;
+    private String fullName;
 
     @Column(length = 60,name = "username")
     private String username;
@@ -22,12 +22,12 @@ public class User extends AbstractPersistable<Integer> {
     @JoinColumn(name="fk_user_role")
     private Role role;
 
-    public String getFull_name() {
-        return full_name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getUsername() {
@@ -57,7 +57,7 @@ public class User extends AbstractPersistable<Integer> {
     @Override
     public String toString() {
         return "User{" +
-                "full_name='" + full_name + '\'' +
+                "full_name='" + fullName + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +

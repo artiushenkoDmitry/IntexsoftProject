@@ -19,7 +19,7 @@ export default class Welcome extends React.Component {
         const {props: {typeStore: {types}}} = this;
         return (
             <div>
-                <h1> Вы на приветственной странице. Драсти! </h1>
+                <h1> Вы на приветственной странице. Драсьти! </h1>
                 <ul>
                 {types.map(({id,typeName}) => (<li key={id}>
                 <Link to={`/types/${id}`}>{typeName}</Link>

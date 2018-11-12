@@ -38,7 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         log.info("=====>role.type: "+user.getRole().getType()+" <=====");
         roles.add(new SimpleGrantedAuthority(user.getRole().getType()));
         log.info("=====>Мы в методе loadUserByUsername UserDetailsServiceImpl-а 4 <=====");
-        log.info("=====>full_name: "+user.getFull_name()+" <=====");
+        log.info("=====>full_name: "+user.getFullName()+" <=====");
         log.info("=====>username: "+user.getUsername()+" <=====");
         log.info("=====>password: "+user.getPassword()+" <=====");
         log.info("=====>role: "+user.getRole()+" <=====");

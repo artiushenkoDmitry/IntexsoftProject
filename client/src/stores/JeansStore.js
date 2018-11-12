@@ -6,16 +6,34 @@ import {observable, action} from "mobx";
  */
 const CONTEXT_URL = process.env.REACT_APP_API_URL || '';
 const GOODS_URL = CONTEXT_URL + 'api/vendorCode/jeans/';
+const ORDER_URL = CONTEXT_URL + 'api/order';
 
 /**
  * Является экспортируемым классом и используется в index.js .
  */
-export default class VendorCodeStore {
+export default class JeansStore {
     @observable
     jeans = null;
 
     @observable
     jeanses = [];
+    
+    /**
+     * Создание ордера на покупку
+     * @param {*} name 
+     * @param {*} address 
+     */
+    addOrder(name, address, email, quantity, id){
+        const params = {
+            method: 'POST',
+            body: JSON.stringify(JeansStore.generate(name, address, email, quantity, id)),
+            headers: {'Content-Type': 'application/json'}
+        };
+        fetch(ORDER_URL, params)
+            .then(response => response.json())
+//            .then(action(jeans => this.jeanses.push(jeans)))
+            .catch(e => console.log(e));
+    }
 
     /**
      * Создание записи непосредственно на DOM-странице приложения.
@@ -23,7 +41,7 @@ export default class VendorCodeStore {
     create() {
         const params = {
             method: 'POST',
-            body: JSON.stringify(VendorCodeStore.generate()),
+            body: JSON.stringify(JeansStore.generate()),
             headers: {'Content-Type': 'application/json'}
         };
         fetch(GOODS_URL, params)
@@ -81,5 +99,22 @@ export default class VendorCodeStore {
         this.jeans = null;
     }
 
+    static generate(name, address, email, quantity, id) {
+        console.log('имя',name);
+        console.log('адрес',address);
+        console.log('мыло',email);
+        console.log('кол-во',quantity);
+        console.log('id',id);
+        return {
+            "quantityOrdered": quantity,
+            "isApproved": false,
+            "customerName": name,
+            "customerEMail": email,
+            "customerAddress": address,
+            "vendorCode": {
+                "id": id 
+            }
+        };
+    }
 }
 

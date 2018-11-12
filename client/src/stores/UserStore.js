@@ -17,13 +17,19 @@ export default class UserStore {
     @observable
     users = [];
 
+    addOrder(name, address){
+        console.log('name: ',name);
+        console.log('address: ',address);
+    }
+
+
     /**
      * Создание записи непосредственно на DOM-странице приложения.
      */
-    create() {
+    create(name, login, pass) {
         const params = {
             method: 'POST',
-            body: JSON.stringify(UserStore.generate()),
+            body: JSON.stringify(UserStore.generate(name, login, pass)),
             headers: {'Content-Type': 'application/json'}
         };
         fetch(GOODS_URL, params)
@@ -37,13 +43,17 @@ export default class UserStore {
      *
      * @private
      */
-    static generate() {
-        const discount = Math.round(100 * Math.random());
+    static generate(name, login, pass) {
+        console.log(name);
+        console.log(login);
+        console.log(pass);
         return {
-            full_name: "Новый пользователь",
-            username: 'user4',
-            password: 'pass4',
-            fk_user_role: 1
+            "fullName": name,
+            "username": login,
+            "password": pass,
+            "role": {
+                "id": 1
+            }
         };
     }
 

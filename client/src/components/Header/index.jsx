@@ -31,7 +31,7 @@ class Header extends React.Component {
 						<a href="#/welcome">НА ГЛАВНУЮ</a>
 					</Navbar.Brand>
 					<Navbar.Brand>
-						<a href="#/director">Сюда имеет доступ директор</a>
+						<a href="#/headmster">Сюда имеет доступ директор</a>
 					</Navbar.Brand>
 					<Navbar.Brand>
 						<a href="#/salesman">Сюда имеет доступ продавцы</a>
@@ -43,7 +43,7 @@ class Header extends React.Component {
 						<NavItem eventKey={1} href="#/login">
 							Login
      			 		</NavItem>
-						<NavItem eventKey={1} href="#">
+						<NavItem eventKey={1} href="#/basket">
 							Корзина
      			 </NavItem>
 					</Nav>

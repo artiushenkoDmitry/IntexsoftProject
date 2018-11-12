@@ -13,6 +13,7 @@ import JeansStore from './stores/JeansStore';
 import ShirtStore from './stores/ShirtStore';
 import ShoesStore from './stores/ShoesStore';
 import SportswearStore from './stores/SportswearStore';
+import OrderStore from './stores/OrderStore';
 
 const stores = {goodStore: new GoodStore(),
                 userStore: new UserStore(), 
@@ -22,7 +23,8 @@ const stores = {goodStore: new GoodStore(),
                 jeansStore: new JeansStore(),
                 shirtStore: new ShirtStore(),
                 shoesStore: new ShoesStore(),
-                sportswearStore: new SportswearStore()};
+                sportswearStore: new SportswearStore(),
+                orderStore: new OrderStore()};
 
 ReactDOM.render(
     <Provider {...stores}>

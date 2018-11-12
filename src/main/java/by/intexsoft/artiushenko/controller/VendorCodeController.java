@@ -1,9 +1,11 @@
 package by.intexsoft.artiushenko.controller;
 
 import by.intexsoft.artiushenko.entity.Basket;
+import by.intexsoft.artiushenko.entity.Order;
 import by.intexsoft.artiushenko.entity.VendorCode;
 import by.intexsoft.artiushenko.service.BasketService;
 import by.intexsoft.artiushenko.service.VendorCodeService;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,16 @@ public class VendorCodeController {
     public List<VendorCode> getShirtList() {
         return vendorCodeService.getShirtList();
     }
+
+    @GetMapping("/getVcodesByType/{id}")
+    public List<VendorCode> getVendorCodeListByType(@PathVariable("id") int id) {
+        return vendorCodeService.getVendorCodeListByType(id);
+    }
+
+//    @PostMapping("/jeans/addOrder")
+//    public Order addOrder(@RequestBody Order order) {
+//        return vendorCodeService.addOrder();
+//    }
 
     @GetMapping
     public List<VendorCode> getAll() {

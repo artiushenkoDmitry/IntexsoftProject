@@ -81,6 +81,5 @@ export default class VendorCodeStore {
     deselect(){
         this.vcode = null;
     }
-
 }
 

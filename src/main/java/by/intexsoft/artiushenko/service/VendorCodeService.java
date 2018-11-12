@@ -1,5 +1,6 @@
 package by.intexsoft.artiushenko.service;
 
+import by.intexsoft.artiushenko.entity.Order;
 import by.intexsoft.artiushenko.entity.Type;
 import by.intexsoft.artiushenko.entity.VendorCode;
 import by.intexsoft.artiushenko.repository.TypeRepository;
@@ -37,10 +38,14 @@ public class VendorCodeService {
     public List<VendorCode> getShirtList(){
         return vendorCodeRepository.getShirtList();
     }
-    public List<VendorCode> getJeansList(){
-        return vendorCodeRepository.getJeansList();
-    }
+    public List<VendorCode> getJeansList(){return vendorCodeRepository.getJeansList();}
     public List<VendorCode> getShoesList(){
         return vendorCodeRepository.getShoesList();
     }
+    public List<VendorCode> getVendorCodeListByType(int typeId){
+        return vendorCodeRepository.getVendorCodeListByType(typeId);
+    }
+//    public Order addOrder(){
+//        return vendorCodeRepository.addOrder();
+//    }
 }

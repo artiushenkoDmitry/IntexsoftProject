@@ -20,7 +20,8 @@ public class GoodController {
     public List<Good> getAll(){
         log.info("=====>Мы в методе getAll GoodController-а<=====");
         List<Good> goods = goodService.findAll();
-        return goods;
+        //return goods;
+        return null;
     }
 
     @PostMapping

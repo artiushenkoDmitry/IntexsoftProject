@@ -4,6 +4,9 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 
+/**
+ * Эта сущьность - кандидат на удалениен
+ */
 @Entity
 @Table(name = "t_basket")
 public class Basket extends AbstractPersistable<Integer> {

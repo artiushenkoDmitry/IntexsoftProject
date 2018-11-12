@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Этот сервис кандидат на удаление
+ */
 @Service
 public class BasketService {
     @Autowired

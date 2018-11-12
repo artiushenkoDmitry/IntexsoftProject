@@ -13,9 +13,21 @@ public class Order extends AbstractPersistable<Integer> {
     @Column(name="is_approved")
     private boolean isApproved;
 
-    @ManyToOne(cascade = CascadeType.REMOVE /* fetch = FetchType.EAGER*/)
-    @JoinColumn(name="fk_order_bascket")
-    private Basket basket;
+//    @ManyToOne(cascade = CascadeType.REMOVE /* fetch = FetchType.EAGER*/)
+//    @JoinColumn(name="fk_order_bascket")
+//    private Basket basket;
+    @Column(length = 120, name="customer_name")
+    private String customerName;
+
+    @Column(length = 20, name="customer_email")
+    private String customerEMail;
+
+    @Column(length = 20, name="customer_address")
+    private String customerAddress;
+
+    @ManyToOne(/*cascade = CascadeType.REMOVE fetch = FetchType.EAGER*/)
+    @JoinColumn(name="fk_order_vendor_code")
+    private VendorCode vendorCode;
 
     public int getQuantityOrdered() {
         return quantityOrdered;
@@ -33,12 +45,36 @@ public class Order extends AbstractPersistable<Integer> {
         isApproved = approved;
     }
 
-    public Basket getBasket() {
-        return basket;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setBasket(Basket basket) {
-        this.basket = basket;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerEMail() {
+        return customerEMail;
+    }
+
+    public void setCustomerEMail(String customerEMail) {
+        this.customerEMail = customerEMail;
+    }
+
+    public String getCustomerAddress() {
+        return customerAddress;
+    }
+
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
+    }
+
+    public VendorCode getVendorCode() {
+        return vendorCode;
+    }
+
+    public void setVendorCode(VendorCode vendorCode) {
+        this.vendorCode = vendorCode;
     }
 
     @Override
@@ -46,7 +82,10 @@ public class Order extends AbstractPersistable<Integer> {
         return "Order{" +
                 "quantityOrdered=" + quantityOrdered +
                 ", isApproved=" + isApproved +
-                ", basket=" + basket +
+                ", customerName='" + customerName + '\'' +
+                ", customerEMail='" + customerEMail + '\'' +
+                ", customerAddress='" + customerAddress + '\'' +
+                ", vendorCode=" + vendorCode +
                 '}';
     }
 }

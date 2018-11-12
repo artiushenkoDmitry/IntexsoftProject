@@ -4,36 +4,19 @@ import {observable, action} from "mobx";
  * Ссылка адрес, откуда стоит загружать данные.
  * @type {string}
  */
+//const GOODS_URL = 'http://127.0.0.1:8080/internet/api/';
 const CONTEXT_URL = process.env.REACT_APP_API_URL || '';
-const GOODS_URL = CONTEXT_URL + 'api/vendorCode/shoes/';
-const ORDER_URL = CONTEXT_URL + 'api/order';
+const GOODS_URL = CONTEXT_URL + 'api/order';
 
 /**
  * Является экспортируемым классом и используется в index.js .
  */
-export default class ShoesStore {
+export default class OrderStore {
     @observable
-    shoe = null;
+    order = null;
 
     @observable
-    shoes = [];
-
-        /**
-     * Создание ордера на покупку
-     * @param {*} name 
-     * @param {*} address 
-     */
-    addOrder(name, address, email, quantity, id){
-        const params = {
-            method: 'POST',
-            body: JSON.stringify(ShoesStore.generate(name, address, email, quantity, id)),
-            headers: {'Content-Type': 'application/json'}
-        };
-        fetch(ORDER_URL, params)
-            .then(response => response.json())
-//            .then(action(jeans => this.jeanses.push(jeans)))
-            .catch(e => console.log(e));
-    }
+    orders = [];
 
     /**
      * Создание записи непосредственно на DOM-странице приложения.
@@ -41,13 +24,26 @@ export default class ShoesStore {
     create() {
         const params = {
             method: 'POST',
-            body: JSON.stringify(ShoesStore.generate()),
+            body: JSON.stringify(OrderStore.generate()),
             headers: {'Content-Type': 'application/json'}
         };
         fetch(GOODS_URL, params)
             .then(response => response.json())
-            .then(action(shoe => this.shoes.push(shoe)))
+            .then(action(order => this.orders.push(order)))
             .catch(e => console.log(e));
+    }
+
+    /**
+     * Генерация случайного числа для примера одного из поля.
+     *
+     * @private
+     */
+    static generate() {
+        const discount = Math.round(100 * Math.random());
+        return {
+            type: "another type",
+            discount: discount
+        };
     }
 
     /**
@@ -68,9 +64,9 @@ export default class ShoesStore {
      */
     @action
     deleteHandler(identity) {
-        const itemIndex = this.shoes.findIndex(({id}) => id === identity);
+        const itemIndex = this.orders.findIndex(({id}) => id === identity);
         if (itemIndex > -1) {
-            this.shoes.splice(itemIndex, 1);
+            this.orders.splice(itemIndex, 1);
         }
     }
 
@@ -80,7 +76,7 @@ export default class ShoesStore {
     loadAll() {
         fetch(GOODS_URL)
             .then(response => response.json())
-            .then(action(shoes => this.shoes = shoes))
+            .then(action(orders => this.orders = orders))
             .catch(error => console.error(error.message))
     }
 
@@ -91,30 +87,12 @@ export default class ShoesStore {
     load(identity) {
         fetch(GOODS_URL + 'select/' + identity)
             .then(response => response.json())
-            .then(action(shoe => this.shoe = shoe))
-            .catch(error => console.error(error.message));
+            .then(action(order => this.order = order))
+            .catch(error => console.error(error.message))
     }
 
     deselect(){
-        this.shoe = null;
-    }
-
-    static generate(name, address, email, quantity, id) {
-        console.log('имя',name);
-        console.log('адрес',address);
-        console.log('мыло',email);
-        console.log('кол-во',quantity);
-        console.log('id',id);
-        return {
-            "quantityOrdered": quantity,
-            "isApproved": false,
-            "customerName": name,
-            "customerEMail": email,
-            "customerAddress": address,
-            "vendorCode": {
-                "id": id 
-            }
-        };
+        this.order = null;
     }
 
 }

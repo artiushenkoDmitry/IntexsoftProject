@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Этот контроллер - кандидат на удаление.
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/basket")
