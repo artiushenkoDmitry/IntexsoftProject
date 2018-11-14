@@ -32,18 +32,12 @@ public class VendorCodeService {
         return vendorCodeRepository.findById(id).get();
     }
 
-    public List<VendorCode> getSportswearList(){
-        return vendorCodeRepository.getSportswearList();
-    }
-    public List<VendorCode> getShirtList(){
-        return vendorCodeRepository.getShirtList();
-    }
-    public List<VendorCode> getJeansList(){return vendorCodeRepository.getJeansList();}
-    public List<VendorCode> getShoesList(){
-        return vendorCodeRepository.getShoesList();
-    }
     public List<VendorCode> getVendorCodeListByType(int typeId){
         return vendorCodeRepository.getVendorCodeListByType(typeId);
+    }
+
+    public VendorCode approveOrder(VendorCode vendorCode){
+        return vendorCodeRepository.save(vendorCode);
     }
 //    public Order addOrder(){
 //        return vendorCodeRepository.addOrder();

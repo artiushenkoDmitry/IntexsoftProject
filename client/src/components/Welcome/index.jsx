@@ -25,11 +25,7 @@ export default class Welcome extends React.Component {
                 <Link to={`/types/${id}`}>{typeName}</Link>
                 </li>))}
                 </ul>
-                {/* {console.log('===============')}
-                {console.log(vcodes[1])}
-                {console.log('===============')}
-                {console.log('JSON.stringify(vcodes[0])')}
-                {console.log(JSON.stringify(vcodes[0]))}  */}
+                {/* {console.log(JSON.parse(sessionStorage.getItem('user')).username)} */}
             </div>
         );
     }

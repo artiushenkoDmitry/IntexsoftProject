@@ -21,35 +21,15 @@ public class VendorCodeController {
     @Autowired
     VendorCodeService vendorCodeService;
 
-    @GetMapping("/shoes")
-    public List<VendorCode> getShoesList() {
-        return vendorCodeService.getShoesList();
-    }
-
-    @GetMapping("/jeans")
-    public List<VendorCode> getJeansList() {
-        return vendorCodeService.getJeansList();
-    }
-
-    @GetMapping("/sportswear")
-    public List<VendorCode> getSportswearList() {
-        return vendorCodeService.getSportswearList();
-    }
-
-    @GetMapping("/shirt")
-    public List<VendorCode> getShirtList() {
-        return vendorCodeService.getShirtList();
-    }
-
     @GetMapping("/getVcodesByType/{id}")
     public List<VendorCode> getVendorCodeListByType(@PathVariable("id") int id) {
         return vendorCodeService.getVendorCodeListByType(id);
     }
 
-//    @PostMapping("/jeans/addOrder")
-//    public Order addOrder(@RequestBody Order order) {
-//        return vendorCodeService.addOrder();
-//    }
+    @PostMapping("/approveOrder")
+    public VendorCode approveOrder(@RequestBody VendorCode vendorCode){
+        return vendorCodeService.approveOrder(vendorCode);
+    }
 
     @GetMapping
     public List<VendorCode> getAll() {

@@ -19,11 +19,16 @@ public class UserController {
     @Autowired
     UserService userService;
 
-//    @PostMapping
-//    public User save(){
-//
-//        return null;
-//    }
+    @GetMapping("/getUserListByRoleId/{id}")
+    public List<User> getUserListByRoleId(@PathVariable("id") int id) {
+        return userService.getUserListByRoleId(id);
+    }
+
+    @GetMapping("/findByUsername/{username}")
+    public User findByUsername(@PathVariable("username")String username) {
+        User user = userService.findByUsername(username);
+        return user;
+    }
 
     @GetMapping
     public List<User> getAll() {
@@ -47,8 +52,7 @@ public class UserController {
     @CrossOrigin
     @GetMapping("/select/{id}")
     public User selectOne(@PathVariable("id") int id) {
-    log.info("=====>Мы в методе selectOne UserController-а<=====");
-        User user = userService.select(id);
-        return user;
+        return userService.select(id);
     }
+
 }

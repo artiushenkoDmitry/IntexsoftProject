@@ -1,4 +1,4 @@
-import {observable, action} from "mobx";
+import { observable, action } from "mobx";
 
 /**
  * Ссылка адрес, откуда стоит загружать данные.
@@ -6,7 +6,8 @@ import {observable, action} from "mobx";
  */
 //const GOODS_URL = 'http://127.0.0.1:8080/internet/api/';
 const CONTEXT_URL = process.env.REACT_APP_API_URL || '';
-const GOODS_URL = CONTEXT_URL + 'api/';
+const GOODS_URL = CONTEXT_URL + 'api/vendorCode/getVcodesByType';
+const ORDER_URL = CONTEXT_URL + 'api/order';
 
 /**
  * Является экспортируемым классом и используется в index.js .
@@ -18,6 +19,23 @@ export default class GoodStore {
     @observable
     goods = [];
 
+    addOrder(quantityAvailable, name, address, email, quantity, id) {
+        if (quantityAvailable > quantity) {
+            const params = {
+                method: 'POST',
+                body: JSON.stringify(GoodStore.generate(quantityAvailable, name, address, email, quantity, id)),
+                headers: { 'Content-Type': 'application/json' }
+            };
+            fetch(ORDER_URL, params)
+                .then(response => response.json())
+                //            .then(() => this.deleteHandler(id))
+                //            .then(action(jeans => this.jeanses.push(jeans)))
+                .catch(e => console.log(e));
+        } else {
+            alert('Слишком много хочешь')
+        }
+    }
+
     /**
      * Создание записи непосредственно на DOM-странице приложения.
      */
@@ -25,7 +43,7 @@ export default class GoodStore {
         const params = {
             method: 'POST',
             body: JSON.stringify(GoodStore.generate()),
-            headers: {'Content-Type': 'application/json'}
+            headers: { 'Content-Type': 'application/json' }
         };
         fetch(GOODS_URL, params)
             .then(response => response.json())
@@ -52,7 +70,7 @@ export default class GoodStore {
      * @param id - индефикатор удаления.
      */
     delete(id) {
-        fetch(GOODS_URL + "delete/" + id, {method: 'DELETE'})
+        fetch(GOODS_URL + "delete/" + id, { method: 'DELETE' })
             .then(() => this.deleteHandler(id))
             .catch(e => console.error(e.message))
     }
@@ -64,7 +82,7 @@ export default class GoodStore {
      */
     @action
     deleteHandler(identity) {
-        const itemIndex = this.goods.findIndex(({id}) => id === identity);
+        const itemIndex = this.goods.findIndex(({ id }) => id === identity);
         if (itemIndex > -1) {
             this.goods.splice(itemIndex, 1);
         }
@@ -73,8 +91,8 @@ export default class GoodStore {
     /**
      * Загрузка данных по запросу.
      */
-    loadAll() {
-        fetch(GOODS_URL)
+    loadAll(id) {
+        fetch(GOODS_URL + '/' + id)
             .then(response => response.json())
             .then(action(goods => this.goods = goods))
             .catch(error => console.error(error.message))
@@ -91,8 +109,27 @@ export default class GoodStore {
             .catch(error => console.error(error.message))
     }
 
-    deselect(){
+    deselect() {
         this.good = null;
+    }
+
+    static generate(quantityAvailable, name, address, email, quantity, id) {
+        console.log('quantityAvailable', quantityAvailable);
+        console.log('имя', name);
+        console.log('адрес', address);
+        console.log('мыло', email);
+        console.log('кол-во', quantity);
+        console.log('id', id);
+        return {
+            "quantityOrdered": quantity,
+            "isApproved": false,
+            "customerName": name,
+            "customerEMail": email,
+            "customerAddress": address,
+            "vendorCode": {
+                "id": id
+            }
+        };
     }
 
 }

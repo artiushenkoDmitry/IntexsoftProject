@@ -7,27 +7,24 @@ export default class AuthStore {
     user = null;
     @observable
     redirectToReferrer = false;
-
-    username = '';
-    password = '';
-
-    /**
-     * Set new username
-     */
-    setUsername(username){
-        this.username = username;
-    }
+    @observable
+    user = JSON.parse(sessionStorage.getItem('user'));
+    @observable
+    userFromDataBase = null;
 
     /**
-     * Set new password
+     * По логину текущего пользователя получает из Б/Д его имя и id.
+     * @param {*} username - логин текущего пользователя.
      */
-    setPassword(password){
-        this.password = password;
-    }
-
-    @action
-    changeRedirectToReferrer() {
-        this.redirectToReferrer = !this.redirectToReferrer;
+    getUserByUsername(username){
+            fetch(CONTEXT_URL + 'api/user/findByUsername/' + username  )
+                .then(response => response.json())
+                .then(action(userFromDataBase => {
+                    this.userFromDataBase = userFromDataBase;
+                    sessionStorage.setItem('userFullName',userFromDataBase.fullName);
+                    sessionStorage.setItem('userId',userFromDataBase.id);
+                }))
+                .catch(error => console.error(error.message))
     }
 
     /**
@@ -52,22 +49,27 @@ export default class AuthStore {
             headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
         };
         fetch(CONTEXT_URL + 'login', params)
-            .then(response => response.text())
+            .then(response => response.json())
             .then(action(user => {
-             this.user = user;
+                sessionStorage.setItem('user', JSON.stringify(user));
+                this.user = user;
+                console.log('user: ',user);
+                this.getUserByUsername(JSON.parse(sessionStorage.getItem('user')).username);
             }))
             .catch(e => {
                 console.log(e);
             });
     }
 
-
     /**
      * logOut
      */
-    logOut(){
+    logout(){
         fetch(CONTEXT_URL + 'logout', {method: 'POST'})
-            .then(() => this.user = null)
+            .then(() => {
+                this.user = null;
+                sessionStorage.clear();
+            })
             .catch(e => console.log(e));
     }
 }

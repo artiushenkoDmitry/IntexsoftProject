@@ -16,13 +16,17 @@ public class VendorCode extends AbstractPersistable<Integer>{
     @JoinColumn(name="fk_vendor_code_brand")
     private Brand brand;
 
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.REMOVE/*, fetch = FetchType.EAGER*/)
     @JoinColumn(name="fk_vendor_code_type")
     private Type type;
 
     @ManyToOne(cascade = CascadeType.REMOVE/*, fetch = FetchType.LAZY*/)
     @JoinColumn(name="fk_vendor_code_age_gender")
     private AgeGender ageGender;
+
+    @ManyToOne(cascade = CascadeType.REMOVE/*, fetch = FetchType.LAZY*/)
+    @JoinColumn(name="fk_vendor_code_user")
+    private User user;
 
 //    @ManyToOne(cascade = CascadeType.REMOVE /*fetch = FetchType.EAGER*/)
 //    @JoinColumn(name="fk_vendor_code_order")
@@ -68,6 +72,14 @@ public class VendorCode extends AbstractPersistable<Integer>{
         this.ageGender = ageGender;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "VendorCode{" +
@@ -76,6 +88,7 @@ public class VendorCode extends AbstractPersistable<Integer>{
                 ", brand=" + brand +
                 ", type=" + type +
                 ", ageGender=" + ageGender +
+                ", user=" + user +
                 '}';
     }
 }

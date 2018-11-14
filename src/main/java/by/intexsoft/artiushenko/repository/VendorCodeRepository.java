@@ -11,20 +11,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface VendorCodeRepository extends JpaRepository<VendorCode, Integer> {
-    @Query("FROM VendorCode vc WHERE vc.type=4")
-    List<VendorCode> getSportswearList();
-
-    @Query("FROM VendorCode vc WHERE vc.type=3")
-    List<VendorCode> getShirtList();
-
-    @Query("FROM VendorCode vc WHERE vc.type=2")
-    List<VendorCode> getJeansList();
-
-//    @Query("FROM VendorCode vc WHERE vc.type=:typeId")
-//    List<VendorCode> getJeansList(int typeId);
-
-    @Query("FROM VendorCode vc WHERE vc.type=1")
-    List<VendorCode> getShoesList();
 
     /**
      * 1-туфли
@@ -38,6 +24,3 @@ public interface VendorCodeRepository extends JpaRepository<VendorCode, Integer>
     List<VendorCode> getVendorCodeListByType(@Param("typeId") int typeId);
 }
 
-/**
- * select * from Book book where book.author=:author
- */

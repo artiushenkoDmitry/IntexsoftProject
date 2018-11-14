@@ -31,7 +31,6 @@ public class OrderController {
     @CrossOrigin
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable("id") int id) {
-        log.info("Delete role with id: {}", id);
         orderService.delete(id);
     }
 

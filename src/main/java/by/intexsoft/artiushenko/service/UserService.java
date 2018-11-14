@@ -20,8 +20,6 @@ public class UserService {
     private static Logger log = LoggerFactory.getLogger(UserService.class);
 
     public User findByUsername(String username) {
-        log.info("=====>Мы в методе findByUsername UserService-а <=====");
-        log.info("=====>username = " + username + " <=====");
         return userRepository.findByUsername(username);
     }
 
@@ -35,9 +33,6 @@ public class UserService {
         return list;
     }
 
-    //    public User create(User user) {
-//        return userRepository.save(user);
-//    }
     public User create(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
@@ -49,5 +44,9 @@ public class UserService {
 
     public User select(Integer id) {
         return userRepository.findById(id).get();
+    }
+
+    public List<User> getUserListByRoleId (int id) {
+        return userRepository.getUserListByRoleId(id);
     }
 }

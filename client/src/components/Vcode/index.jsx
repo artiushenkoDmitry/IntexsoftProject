@@ -26,8 +26,6 @@ export default class Vcode extends React.Component {
         const { vcode } = this.props.vendorCodeStore;
         return (
             <div>
-                {/* id: {vcode && vcode.id || 'Ошибка загрузки...'}
-                <br /> */}
                 Доступное количество: {vcode && vcode.quantityAvailable || 'Загрузка...'}
                 <br />
                 Стоимость: {vcode && vcode.prise || 'Загрузка...'}

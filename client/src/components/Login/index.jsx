@@ -11,13 +11,14 @@ export default class Login extends React.Component {
         this.login=React.createRef();
         this.password=React.createRef();
     }
-    handleClick(){
+   signIn(){
         this.props.authStore.signIn(this.login.current.value, this.password.current.value);
     }
     /**
      * Отрисовка элементов компании на странице с возможностью их удаления.
      */
     render() {
+        const {props: {authStore: {userFromDataBase}}} = this;
         return (
             <div>
                 <Form horizontal>
@@ -39,15 +40,9 @@ export default class Login extends React.Component {
                         </Col>
                     </FormGroup>
 
-                    {/* <FormGroup>
-                        <Col smOffset={2} sm={10}>
-                            <Checkbox>Remember me</Checkbox>
-                        </Col>
-                    </FormGroup> */}
-
                     <FormGroup>
                         <Col smOffset={2} sm={10}>
-                            <Button onClick={()=>this.handleClick()}>Sign in</Button>
+                            <Button onClick={()=>this.signIn()}>Sign in</Button>
                         </Col>
                     </FormGroup>
                 </Form>

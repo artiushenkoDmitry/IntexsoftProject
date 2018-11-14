@@ -18,31 +18,65 @@ export default class OrderStore {
     @observable
     orders = [];
 
-    /**
-     * Создание записи непосредственно на DOM-странице приложения.
-     */
-    create() {
+    approveOrder(orderId,id, newQuantityAvailable, quantityOrdered, newPrise, newBrand, newType, newAgeGender, newUser){
         const params = {
             method: 'POST',
-            body: JSON.stringify(OrderStore.generate()),
+            body: JSON.stringify(OrderStore.generate(id, newQuantityAvailable, quantityOrdered, newPrise, newBrand, newType, newAgeGender, newUser)),
             headers: {'Content-Type': 'application/json'}
         };
-        fetch(GOODS_URL, params)
+        fetch(CONTEXT_URL+'api/vendorCode/approveOrder', params)
             .then(response => response.json())
-            .then(action(order => this.orders.push(order)))
+            .then(() => this.delete(orderId))
+//            .then(action(order => this.orders.push(order)))
             .catch(e => console.log(e));
     }
+
+    // /**
+    //  * Создание записи непосредственно на DOM-странице приложения.
+    //  */
+    // create() {
+    //     const params = {
+    //         method: 'POST',
+    //         body: JSON.stringify(OrderStore.generate()),
+    //         headers: {'Content-Type': 'application/json'}
+    //     };
+    //     fetch(GOODS_URL, params)
+    //         .then(response => response.json())
+    //         .then(action(order => this.orders.push(order)))
+    //         .catch(e => console.log(e));
+    // }
 
     /**
      * Генерация случайного числа для примера одного из поля.
      *
      * @private
      */
-    static generate() {
-        const discount = Math.round(100 * Math.random());
+    static generate(newId, newQuantityAvailable, quantityOrdered, newPrise, newBrand, newType, newAgeGender, newUser) {
+        newQuantityAvailable = newQuantityAvailable - quantityOrdered;
+        console.log('пришли в метод generate');
+        console.log('newId: ',newId);
+        console.log('newQuantityAvailable: ',newQuantityAvailable);
+        console.log('newPrise: ',newPrise);
+        console.log('newBrand: ',newBrand);
+        console.log('newType: ',newType);
+        console.log('newAgeGender: ',newAgeGender);
+        console.log('newUser: ',newUser);
         return {
-            type: "another type",
-            discount: discount
+            id:newId,
+            quantityAvailable:newQuantityAvailable,
+            prise:newPrise,
+            brand:{
+                id:newBrand
+            },
+            type: {
+                id:newType
+            },
+            ageGender:{
+                id:newAgeGender
+            },
+            user:{
+                id:newUser
+            }
         };
     }
 
@@ -52,7 +86,7 @@ export default class OrderStore {
      * @param id - индефикатор удаления.
      */
     delete(id) {
-        fetch(GOODS_URL + "delete/" + id, {method: 'DELETE'})
+        fetch(GOODS_URL + "/delete/" + id, {method: 'DELETE'})
             .then(() => this.deleteHandler(id))
             .catch(e => console.error(e.message))
     }

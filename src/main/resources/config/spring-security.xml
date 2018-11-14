@@ -15,9 +15,8 @@
         <security:form-login login-processing-url="/login"
                              username-parameter="username"
                              password-parameter="password"
-                             default-target-url="/#/welcome"/>
-        <security:logout logout-url="/logout"
-                         logout-success-url="/#/welcome"/>
+                             default-target-url="/api/auth"/>
+        <security:logout logout-url="/logout"/>
     </http>
 
     <b:bean id="encoder"

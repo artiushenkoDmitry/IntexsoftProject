@@ -18,6 +18,48 @@ export default class VendorCodeStore {
     @observable
     vcodes = [];
 
+    addGood(price, quantity, brand, type, ageGender,userId){
+        const params = {
+            method: 'POST',
+            body: JSON.stringify(VendorCodeStore.generate(price, quantity, brand, type, ageGender,userId)),
+            headers: {'Content-Type': 'application/json'}
+        };
+        fetch(GOODS_URL, params)
+            .then(response => response.json())
+            .then(action(vcode => this.vcodes.push(vcode)))
+            .catch(e => console.log(e));
+    }
+
+     /**
+     * Генерация случайного числа для примера одного из поля.
+     *
+     * @private
+     */
+    static generate(price, quantity, brand, type, ageGender,userId) {
+        console.log('price: ',price);
+        console.log('quantity: ',quantity);
+        console.log('brand: ',brand);
+        console.log('type: ',type);
+        console.log('ageGender: ',ageGender);
+        console.log('userId: ',userId);
+        return {
+            quantityAvailable: quantity,
+            prise: price,
+            brand: {
+                id:brand
+            },
+            type: {
+                id:type
+            },
+            ageGender:{
+                id:ageGender
+            },
+            user:{
+                id:userId
+            }
+        };
+    }
+    
     /**
      * Создание записи непосредственно на DOM-странице приложения.
      */

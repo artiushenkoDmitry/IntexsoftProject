@@ -25,10 +25,11 @@ export default class Orders extends React.Component {
         return (
             <div>
                 <ul>
-                    {orders.map(({id, quantityOrdered, customerName, customerPhone, customerAddress, vendorCode}) => (<li key={id}>
+                    {orders.map(({id, quantityOrdered, customerName, customerEMail, customerAddress, vendorCode}) => (<li key={id}>
                         Заказчик: {customerName || 'Загрузка...'}<br/>
-                        Контактный телефон: {customerPhone || 'Загрузка...'}<br/>
+                        Адрес электронной почты: {customerEMail || 'Загрузка...'}<br/>
                         Адрес доставки: {customerAddress || 'Загрузка...'}<br/>
+                        <br/>
                         Информация о товаре: <br/>
                         Стоимость: {vendorCode.prise || 'Загрузка...'}<br/>
                         Бренд: {vendorCode.brand.brandName || 'Загрузка...'}<br/>
@@ -37,7 +38,7 @@ export default class Orders extends React.Component {
                         Количество: {quantityOrdered || 'Загрузка...'}<br/></li>))}
                 </ul>
                 <Link to="/welcome">На главную</Link>
-                {console.log(orders.length)}
+                {/* {console.log(JSON.stringify(orders))} */}
             </div>
         );
     }

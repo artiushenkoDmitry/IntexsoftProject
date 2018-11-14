@@ -17,6 +17,18 @@ export default class UserStore {
     @observable
     users = [];
 
+    getUserListByRoleId(id){
+        fetch(GOODS_URL+'/getUserListByRoleId/'+id)
+        .then(response => response.json())
+        .then(action(users => this.users = users))
+        .catch(error => console.error(error.message))
+    }
+
+    /**
+     * 
+     * @param {*} name 
+     * @param {*} address 
+     */
     addOrder(name, address){
         console.log('name: ',name);
         console.log('address: ',address);
@@ -63,7 +75,7 @@ export default class UserStore {
      * @param id - индефикатор удаления.
      */
     delete(id) {
-        fetch(GOODS_URL + "delete/" + id, {method: 'DELETE'})
+        fetch(GOODS_URL + "/delete/" + id, {method: 'DELETE'})
             .then(() => this.deleteHandler(id))
             .catch(e => console.error(e.message))
     }
