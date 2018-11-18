@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+/**
+ * Сервис описывающий основые методы для работы с сущьностью User
+ */
 @Service
 public class UserService {
     @Autowired
@@ -19,35 +22,56 @@ public class UserService {
 
     private static Logger log = LoggerFactory.getLogger(UserService.class);
 
+    /**
+     * Возвращает пользователя по его логину.
+     * org.springframework.security.core.userdetails.User - предоставляет только логин, пароль и роль пользователя.
+     * Для того, чтобы получить id и имя пользователя нужен этот метод.
+     */
     public User findByUsername(String username) {
-        log.info("=====>Мы в методе findByUsername UserService-а <=====");
-        log.info("=====>username = " + username + " <=====");
         return userRepository.findByUsername(username);
     }
 
-    public User save(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
 
+//    public User save(User user) {
+//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//        return userRepository.save(user);
+//    }
+
+    /**
+     * Возвращает список сущьностей user
+     */
     public List<User> findAll() {
         List<User> list = userRepository.findAll();
         return list;
     }
 
-    //    public User create(User user) {
-//        return userRepository.save(user);
-//    }
+    /**
+     * Вносит запись в базу данных (в таблицу t_user)
+     */
     public User create(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
+    /**
+     * Удаляет запись из базы данных (из таблицы t_user)
+     */
     public void delete(int id) {
         userRepository.deleteById(id);
     }
 
+    /**
+     * Выбирает запись из базы данных (из таблицы t_user) по id
+     */
     public User select(Integer id) {
         return userRepository.findById(id).get();
+    }
+
+    /**
+     * Возвращает роль польлзователя по его id
+     * @param id - идентификатор пользователя
+     */
+    public List<User> getUserListByRoleId (int id) {
+        return userRepository.getUserListByRoleId(id);
     }
 }

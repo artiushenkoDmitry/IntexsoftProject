@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Контроллер содержащий методы для работы с сущьностью Role
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/role")
@@ -17,25 +20,35 @@ public class RoleController {
     @Autowired
     RoleService roleService;
 
+    /**
+     * Возвращает список сущьностей role
+     */
     @GetMapping
     public List<Role> getAll() {
-        log.info("=====> Мы в методе getAll RoleController-а <=====");
         List<Role> roles = roleService.findAll();
         return roles;
     }
 
+    /**
+     * Вносит запись в базу данных (в таблицу t_role)
+     */
     @PostMapping
     public Role create(@RequestBody Role role) {
         return roleService.create(role);
     }
 
+    /**
+     * Удаляет запись из базы данных (из таблицы t_role)
+     */
     @CrossOrigin
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable("id") int id) {
-        log.info("Delete role with id: {}", id);
         roleService.delete(id);
     }
 
+    /**
+     * Выбирает запись из базы данных (из таблицы t_order) по id
+     */
     @CrossOrigin
     @GetMapping("/select/{id}")
     public Role selectOne(@PathVariable("id") int id) {

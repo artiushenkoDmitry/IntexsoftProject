@@ -19,24 +19,44 @@ public class UserController {
     @Autowired
     UserService userService;
 
-//    @PostMapping
-//    public User save(){
-//
-//        return null;
-//    }
-
-    @GetMapping
-    public List<User> getAll() {
-        log.info("=====>Мы в методе getAll UserController-а<=====");
-        List<User> users = userService.findAll();
-        return users;
+    /**
+     * Возвращает роль польлзователя по его id
+     * @param id - идентификатор пользователя
+     */
+    @GetMapping("/getUserListByRoleId/{id}")
+    public List<User> getUserListByRoleId(@PathVariable("id") int id) {
+        return userService.getUserListByRoleId(id);
     }
 
+    /**
+     * Возвращает пользователя по его логину.
+     * org.springframework.security.core.userdetails.User - предоставляет только логин, пароль и роль пользователя.
+     * Для того, чтобы получить id и имя пользователя нужен этот метод.
+     */
+    @GetMapping("/findByUsername/{username}")
+    public User findByUsername(@PathVariable("username")String username) {
+       return userService.findByUsername(username);
+    }
+
+    /**
+     * Возвращает список сущьностей user
+     */
+    @GetMapping
+    public List<User> getAll() {
+        return userService.findAll();
+    }
+
+    /**
+     * Вносит запись в базу данных (в таблицу t_user)
+     */
     @PostMapping
     public User create(@RequestBody User user) {
         return userService.create(user);
     }
 
+    /**
+     * Удаляет запись из базы данных (из таблицы t_user)
+     */
     @CrossOrigin
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable("id") int id) {
@@ -44,11 +64,13 @@ public class UserController {
         userService.delete(id);
     }
 
+    /**
+     * Выбирает запись из базы данных (из таблицы t_user) по id
+     */
     @CrossOrigin
     @GetMapping("/select/{id}")
     public User selectOne(@PathVariable("id") int id) {
-    log.info("=====>Мы в методе selectOne UserController-а<=====");
-        User user = userService.select(id);
-        return user;
+        return userService.select(id);
     }
+
 }

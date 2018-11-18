@@ -4,6 +4,9 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 
+/**
+ * Сущьность описывающая роль пользователя
+ */
 @Entity
 @Table(name = "t_role")
 public class Role extends AbstractPersistable<Integer> {
@@ -18,10 +21,10 @@ public class Role extends AbstractPersistable<Integer> {
         this.type = type;
     }
 
-    @Override
-    public String toString() {
-        return "Role{" +
-                "type='" + type + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Role{" +
+//                "type='" + type + '\'' +
+//                '}';
+//    }
 }

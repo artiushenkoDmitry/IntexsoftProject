@@ -14,7 +14,9 @@ import org.slf4j.LoggerFactory;
 import java.util.HashSet;
 import java.util.Set;
 
-
+/**
+ * Сервис предоставляющий имя, пароль и роль пользователя
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     private static Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
@@ -22,28 +24,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserService userService;
 
-    /*public UserDetailsServiceImpl(UserService userService) {
-        this.userService = userService;
-    }*/
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("=====>Мы в методе loadUserByUsername UserDetailsServiceImpl-а 1 <=====");
-        log.info("=====>username = "+username+" <=====");
         User user = userService.findByUsername(username);
-        log.info("=====>Мы в методе loadUserByUsername UserDetailsServiceImpl-а 2 <=====");
         Set<GrantedAuthority> roles = new HashSet<>();
-        log.info("=====>Мы в методе loadUserByUsername UserDetailsServiceImpl-а 3 <=====");
-        log.info("=====>role: "+user.getRole()+" <=====");
-        log.info("=====>role.type: "+user.getRole().getType()+" <=====");
         roles.add(new SimpleGrantedAuthority(user.getRole().getType()));
-        log.info("=====>Мы в методе loadUserByUsername UserDetailsServiceImpl-а 4 <=====");
-        log.info("=====>full_name: "+user.getFull_name()+" <=====");
-        log.info("=====>username: "+user.getUsername()+" <=====");
-        log.info("=====>password: "+user.getPassword()+" <=====");
-        log.info("=====>role: "+user.getRole()+" <=====");
-        log.info("=====>role.type: "+user.getRole().getType()+" <=====");
-        log.info("=====>roles: "+roles+" <=====");
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
                         user.getPassword(),
                         roles);

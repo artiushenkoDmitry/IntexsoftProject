@@ -3,12 +3,16 @@ package by.intexsoft.artiushenko.entity;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
+import java.util.List;
 
+/**
+ * Сущьность описывающая пользователя
+ */
 @Entity
 @Table(name = "t_user")
 public class User extends AbstractPersistable<Integer> {
     @Column(length = 120, name="full_name")
-    private String full_name;
+    private String fullName;
 
     @Column(length = 60,name = "username")
     private String username;
@@ -18,16 +22,16 @@ public class User extends AbstractPersistable<Integer> {
 
 //    @Column(username = "fk_user_role")
 //    private int fk_user_role;
-    @ManyToOne(/*cascade = CascadeType.ALL fetch = FetchType.LAZY*/)
+    @ManyToOne(/*cascade = CascadeType.ALL*/ fetch = FetchType.EAGER)
     @JoinColumn(name="fk_user_role")
     private Role role;
 
-    public String getFull_name() {
-        return full_name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getUsername() {
@@ -54,14 +58,14 @@ public class User extends AbstractPersistable<Integer> {
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "full_name='" + full_name + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "full_name='" + fullName + '\'' +
+//                ", username='" + username + '\'' +
+//                ", password='" + password + '\'' +
+//                ", role=" + role +
+//                '}';
+//    }
 }
 
