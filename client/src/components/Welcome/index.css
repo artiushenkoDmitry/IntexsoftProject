@@ -1,0 +1,22 @@
+.linkStyle {
+    color: rgb(39, 43, 44);
+    text-decoration: none;
+    margin: 10px;
+  }
+  .linkStyle:hover {
+    color: gray;
+    position: relative;
+    top: 2px;
+    left: 2px;
+    text-decoration: none;
+  }
+.text{
+  text-align:  center;
+}
+.marginLeft{
+  margin-left: 20px;
+}
+.wite-space-div-text {
+  white-space: pre;
+}
+

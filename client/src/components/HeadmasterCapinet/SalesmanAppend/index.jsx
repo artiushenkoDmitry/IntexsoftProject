@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import { inject, observer } from "mobx-react/index";
-import { Form, FormGroup, Col, FormControl} from "react-bootstrap"
+import { Form, FormGroup, Col, FormControl, Table } from "react-bootstrap"
 
 @inject('userStore')
 @observer
@@ -17,7 +17,7 @@ export default class Headmaster extends React.Component {
      * Вызывает метод loadAll
      */
     componentDidMount() {
-        this.props.userStore.loadAll();
+        this.props.userStore.getUserListByRoleId(1);
     }
     /**
      * Создает новую запись в таблице пользователей в базе данных
@@ -33,9 +33,23 @@ export default class Headmaster extends React.Component {
      * Отрисовывает поля для ввода имени, логина и пароля нового продавца
      */
     render() {
-        // const { props: { userStore: { users } } } = this;
+         const { props: { userStore: { users } } } = this;
         return (
             <div>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Имя собственное</th>
+                            <th>Логин*</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {users.map(({ id, fullName, username }) => (<tr key={id}>
+                            <td>{fullName}</td>
+                            <td>{username}</td>
+                        </tr>))}
+                    </tbody>
+                </Table>
                 <Form inline>
                     <FormGroup controlId="formHorizontalEmail">
                         <Col sm={10}>
@@ -55,12 +69,14 @@ export default class Headmaster extends React.Component {
                         </Col>
                     </FormGroup>
                 </Form>
+                <br/>
                 <button onClick={() =>
-                            this.addSalesman(this.name.current.value, this.login.current.value, this.pass.current.value)}>Добавить продавца</button>
+                    this.addSalesman(this.name.current.value, this.login.current.value, this.pass.current.value)}>Добавить продавца</button>
+                <br />
                 <br/>
-                <Link to="/welcome">На главную</Link>
-                <br/>
-                <Link to="/headmster">Обратно, в личный кабинет</Link>
+                <Link to="/welcome" className='linkStyle'>На главную</Link>
+                <br />
+                <Link to="/headmster" className='linkStyle'>Обратно, в личный кабинет</Link>
             </div>
         );
     }

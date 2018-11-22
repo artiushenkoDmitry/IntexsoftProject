@@ -1,24 +1,13 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import { inject, observer } from "mobx-react/index";
+import "./index.css";
 
 @inject('orderStore')
 @observer
 export default class Orders extends React.Component {
 
-    // /**
-    //  * Удалить указанный по id элемент.
-    //  * @param id - идентификатор поля.
-    //  */
-    // delete(id) {
-    //     this.props.orderStore.delete(id);
-    // }
-    /**
-     * После загрузки компонента отрисовывает все заказы
-     */
-    //    componentDidMount() {
-    //        this.props.orderStore.loadAll();
-    //    }
+
     componentDidMount() {
         this.props.orderStore.loadCurrentUserOrders();
     }
@@ -30,25 +19,37 @@ export default class Orders extends React.Component {
         return (
             <div>
                 <table>
-                    <tbody>
-                        {currentOrders.map(({ id, quantityOrdered, customerName, customerEMail, customerAddress, brand, type, prise, ageGender }) => (<tr key={id}>
-                            <td>Заказчик: {customerName || 'Загрузка...'}<br />
-                                Адрес электронной почты: {customerEMail || 'Загрузка...'}<br />
-                                Адрес доставки: {customerAddress || 'Загрузка...'}<br />
-                                <br />
-                                Информация о товаре: <br />
-                                Стоимость: {prise || 'Загрузка...'}<br />
-                                Бренд: {brand || 'Загрузка...'}<br />
-                                Тип: {type || 'Загрузка...'}<br />
-                                Пол-возраст: {ageGender || 'Загрузка...'}<br />
-                                Количество: {quantityOrdered || 'Загрузка...'}<br />
-                                Новер вашего заказа: {id|| 'Загрузка...'}<br/><br/>
-                            </td>
-                         </tr>))
-                        }
-                    </tbody>
+                    <tr>
+                        <td>
+                            <table className='indentColumn'>
+                                <tbody>
+                                    {currentOrders.map(({size, id, quantityOrdered, customerName, customerEMail, customerAddress, brand, type, prise, ageGender }) => (<tr key={id}>
+                                        <td>
+                                            <div className='wite-space-div-text'>
+                                                {'Заказчик: ' + customerName + '\n' +
+                                                    'Электронный адрес: ' + customerEMail + '\n' +
+                                                    'Адрес доставки: ' + customerAddress + '\n' +
+                                                    '\t' + 'Информация о товаре: \n' +
+                                                    '\t' + 'Стоимость: ' + prise + '\n' +
+                                                    '\t' + 'Бренд: ' + brand + '\n' +
+                                                    '\t' + 'Тип: ' + type + '\n' +
+                                                    '\t' + 'Категория: ' + ageGender + '\n' +
+                                                    '\t' + 'Количество: ' + quantityOrdered + '\n' +
+                                                    '\t' + 'Размер: ' + size + '\n' +
+                                                    '\t' + 'Номер вашего заказа: ' + id}
+                                            </div>
+                                        </td>
+                                    </tr>))
+                                    }
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>
+                            <img src="/images/happyness.jpg" height="500" className='pictureUp'/>
+                        </td>
+                    </tr>
                 </table>
-                <Link to="/welcome">На главную</Link>
+                <Link to="/welcome" className='linkStyle'>На главную</Link>
             </div>
         );
     }

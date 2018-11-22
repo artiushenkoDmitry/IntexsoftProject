@@ -118,7 +118,7 @@ export default class OrderStore {
     loadAll() {
         fetch(ORDER_URL)
             .then(response => response.json())
-            .then(action(orders => this.orders = orders))
+            .then(action(orders => {this.orders = orders}))
             .catch(error => console.error(error.message))
     }
 

@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import { inject, observer } from "mobx-react/index";
-// import { Form, FormGroup, Col, FormControl} from "react-bootstrap"
+import { Table } from "react-bootstrap"
+import "./index.css";
 
 @inject('userStore')
 @observer
@@ -26,19 +27,28 @@ export default class Headmaster extends React.Component {
         const { props: { userStore: { users } } } = this;
         return (
             <div>
-                <h1>Текущий список продавцов</h1>
-                <table>
+                <center><h2>Добрый день, {sessionStorage.getItem('userFullName')}.</h2></center>
+                <h3>Текущий список продавцов</h3>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Имя собственное</th>
+                            <th>Логин*</th>
+                        </tr>
+                    </thead>
                     <tbody>
-                        {users.map(({ id, fullName, role }) => (<tr key={id}>
-                            <td>{role.type === 'ROLE_SALESMAN' ? 'Имя: ' + fullName || 'Загрузка...' : null}</td>
+                        {users.map(({ id, fullName, username }) => (<tr key={id}>
+                            <td>{ fullName }</td>
+                            <td>{ username }</td>
                         </tr>))}
                     </tbody>
-                </table>
-                <Link to="/salesmanDelete">Удалить продавца</Link>
+                </Table>
+                <Link to="/salesmanDelete" className='linkStyle'>Удалить продавца</Link>
                 <br />
-                <Link to="/salesmanAppend">Добавить нового продавца</Link>
+                <Link to="/salesmanAppend" className='linkStyle'>Добавить нового продавца</Link>
                 <br />
-                <Link to="/welcome">На главную</Link>
+                <Link to="/welcome" className='linkStyle'>На главную</Link>
+                <h6 className='marginLeft'>* - поле должно быть уникальным</h6>
             </div>
         );
     }

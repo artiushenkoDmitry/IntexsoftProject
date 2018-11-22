@@ -28,9 +28,9 @@ export default class GoodStore {
     @observable
     currentUserOrders = [];
 
-    addOrderToSessionStorage(order) {
-        sessionStorage.setItem('order', order);
-    }
+    // addOrderToSessionStorage(order) {
+    //     sessionStorage.setItem('order', order);
+    // }
 
     /**
      * Добавляет заказ в базу данных и в SessionStorage. Если заказанное количество превышает доступное - появляется соответствующее сообщение
@@ -41,7 +41,7 @@ export default class GoodStore {
      * @param {*} quantity - заказанное количество
      * @param {*} id - идентификатор артикула
      */
-    addOrder(prise, quantityAvailable, name, address, email, quantity, id, brand, type, ageGender) {
+    addOrder(prise, quantityAvailable, name, address, email, quantity, id, size, brand, type, ageGender) {
         if (quantityAvailable > quantity) {
             const params = {
                 method: 'POST',
@@ -51,7 +51,7 @@ export default class GoodStore {
             fetch(ORDER_URL, params)
                 .then((response) => response.json())
                 .then(action((order) =>
-                    this.generateOrderForSession(name, address, email, quantity, prise, brand, type, ageGender, order.id)))
+                    this.generateOrderForSession(size, name, address, email, quantity, prise, brand, type, ageGender, order.id)))
                 .catch(e => console.log(e));
         } else {
             alert('Заказанное количество превышает доступное.')
@@ -64,11 +64,8 @@ export default class GoodStore {
      * Это нужно для того, чтобы обнулять currentUserOrders если нужно поменять пользователя не закрывая 
      * браузер
      */
-    generateOrderForSession(name, address, email, quantity, prise, brand, type, ageGender, id) {
-        console.log(sessionStorage.getItem('orders'));
-        console.log(JSON.stringify(this.currentUserOrders));
-        //sessionStorage.getItem('orders') == null ? this.currentUserOrders = [] :
-        this.currentUserOrder = this.generateForSessionStore(name, address, email, quantity, prise, brand, type, ageGender, id);
+    generateOrderForSession(size, name, address, email, quantity, prise, brand, type, ageGender, id) {
+        this.currentUserOrder = this.generateForSessionStore(size, name, address, email, quantity, prise, brand, type, ageGender, id);
         this.currentUserOrders.push(this.currentUserOrder);
         sessionStorage.setItem('orders', JSON.stringify(this.currentUserOrders));
     }
@@ -76,7 +73,7 @@ export default class GoodStore {
     /**
      * Генерирует заказ для сохранения в sessionStorage
      */
-    generateForSessionStore(name, address, email, quantity, prise, brand, type, ageGender, id) {
+    generateForSessionStore(size, name, address, email, quantity, prise, brand, type, ageGender, id) {
         return {
             id: id,
             quantityOrdered: quantity,
@@ -86,7 +83,8 @@ export default class GoodStore {
             prise: prise,
             brand: brand,
             type: type,
-            ageGender: ageGender
+            ageGender: ageGender,
+            size: size
         }
     }
 

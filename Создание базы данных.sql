@@ -27,9 +27,9 @@ INSERT INTO dev.t_role VALUES (2, 'ROLE_HEADMASTER');
 select * from dev.t_role;
 
 delete from dev.t_user
-INSERT INTO dev.t_user VALUES (1,'Иммануил Гедеонович', 'user3', '$2a$10$yJjyRJlY8uLymg1eLfOateIvBrP69MV29XrkFO7m9VCnEDP5XfQAO', 2);
-INSERT INTO dev.t_user VALUES (2, 'Продавец №1', 'user1', '$2a$10$lNXH76ln0avh.TEMWgh5yeOlU8YMKYU888/ocKq6MIYhJ4JL9JjJa', 1);
-INSERT INTO dev.t_user VALUES (3, 'Продавец №2', 'user2', '$2a$10$.Zm8KimuC2H8X66UqFnoXegqhZnLWocynNa87r3fZdATdV233BARy', 1);
+INSERT INTO dev.t_user VALUES (1,'Эммануил Гедеонович', 'user3', '$2a$10$yJjyRJlY8uLymg1eLfOateIvBrP69MV29XrkFO7m9VCnEDP5XfQAO', 2);
+INSERT INTO dev.t_user VALUES (2, 'Виталий', 'user1', '$2a$10$lNXH76ln0avh.TEMWgh5yeOlU8YMKYU888/ocKq6MIYhJ4JL9JjJa', 1);
+INSERT INTO dev.t_user VALUES (3, 'Сергей', 'user2', '$2a$10$.Zm8KimuC2H8X66UqFnoXegqhZnLWocynNa87r3fZdATdV233BARy', 1);
 select * from dev.t_user;
 
 ///////////////////////////////
@@ -42,6 +42,7 @@ CREATE TABLE dev.t_vendor_code(
 id serial PRIMARY KEY NOT NULL,
 quantity_available INTEGER NOT NULL,
 prise INTEGER NOT NULL,
+size character varying(20), 
 fk_vendor_code_brand INTEGER REFERENCES dev.t_brand(id) ON DELETE CASCADE NOT NULL,
 fk_vendor_code_type INTEGER REFERENCES dev.t_type(id) ON DELETE CASCADE NOT NULL,
 fk_vendor_code_age_gender INTEGER REFERENCES dev.t_age_gender(id) ON DELETE CASCADE NOT NULL,
@@ -108,10 +109,10 @@ INSERT INTO dev.t_type (type_name) VALUES ('рубашка');
 INSERT INTO dev.t_type (type_name) VALUES ('спортивная одежда');
 SELECT * FROM dev.t_type;
 
-INSERT INTO dev.t_age_gender (age_gender) VALUES ('мальчик');
-INSERT INTO dev.t_age_gender (age_gender) VALUES ('девочка');
-INSERT INTO dev.t_age_gender (age_gender) VALUES ('мужчина');
-INSERT INTO dev.t_age_gender (age_gender) VALUES ('женщина');
+INSERT INTO dev.t_age_gender (age_gender) VALUES ('одежда для мальчиков');
+INSERT INTO dev.t_age_gender (age_gender) VALUES ('одежда для девочек');
+INSERT INTO dev.t_age_gender (age_gender) VALUES ('мужская одежда');
+INSERT INTO dev.t_age_gender (age_gender) VALUES ('женская одежда');
 SELECT * FROM dev.t_age_gender;
 
 INSERT INTO dev.t_vendor_code (quantity_available, prise, fk_vendor_code_brand, fk_vendor_code_type, fk_vendor_code_age_gender, fk_vendor_code_user)
@@ -150,6 +151,23 @@ INSERT INTO dev.t_vendor_code (quantity_available, prise, fk_vendor_code_brand, 
 INSERT INTO dev.t_vendor_code (quantity_available, prise, fk_vendor_code_brand, fk_vendor_code_type, fk_vendor_code_age_gender, fk_vendor_code_user)
 		       VALUES (100,75,4, 1, 4, 2);
 
+update dev.t_vendor_code set size = '152' WHERE id = 1;
+update dev.t_vendor_code set size = '158' WHERE id = 2;
+update dev.t_vendor_code set size = '152' WHERE id = 3;
+update dev.t_vendor_code set size = '32' WHERE id = 4;
+update dev.t_vendor_code set size = '150' WHERE id = 5;
+update dev.t_vendor_code set size = '156' WHERE id = 6;
+update dev.t_vendor_code set size = '150' WHERE id = 7;
+update dev.t_vendor_code set size = '28' WHERE id = 8;
+update dev.t_vendor_code set size = '46/48' WHERE id = 9;
+update dev.t_vendor_code set size = '42' WHERE id = 10;
+update dev.t_vendor_code set size = '48' WHERE id = 11;
+update dev.t_vendor_code set size = '42' WHERE id = 12;
+update dev.t_vendor_code set size = '44/46' WHERE id = 13;
+update dev.t_vendor_code set size = '42' WHERE id = 14;
+update dev.t_vendor_code set size = '46' WHERE id = 15;
+update dev.t_vendor_code set size = '38' WHERE id = 16;			   
+
 //////////////////////////////////////////
 SELECT * FROM dev.t_vendor_code;
 SELECT t_vendor_code.id, t_vendor_code.quantity_available, t_vendor_code.prise  FROM dev.t_vendor_code JOIN dev.t_brand on t_vendor_code.fk_vendor_code_brand = t_brand.id;
@@ -166,3 +184,8 @@ UPDATE dev.t_type SET type_name = 'jeans' WHERE id = 2;
 ////////////////////
 Запуск хрома для дебага
 C:\Program Files (x86)\Google\Chrome\Application\chrome.exe --user-data-dir="C:/Chrome dev session" --disable-web-security
+///////////////////
+Работа с блобами в БД
+CREATE TABLE dev.fruit (name CHAR(30), image OID); 
+CREATE TABLE fruit (name CHAR(30), image OID);
+INSERT INTO dev.fruit VALUES ('peach', lo_import('c:/1.jpg')); 

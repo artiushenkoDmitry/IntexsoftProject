@@ -13,9 +13,6 @@ public class Order extends AbstractPersistable<Integer> {
     @Column(name="quantity_ordered")
     private int quantityOrdered;
 
-    @Column(name="is_approved")
-    private boolean isApproved;
-
     @Column(length = 120, name="customer_name")
     private String customerName;
 
@@ -25,7 +22,7 @@ public class Order extends AbstractPersistable<Integer> {
     @Column(length = 20, name="customer_address")
     private String customerAddress;
 
-    @ManyToOne(/*cascade = CascadeType.REMOVE*/ fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="fk_order_vendor_code")
     private VendorCode vendorCode;
 
@@ -35,14 +32,6 @@ public class Order extends AbstractPersistable<Integer> {
 
     public void setQuantityOrdered(int quantityOrdered) {
         this.quantityOrdered = quantityOrdered;
-    }
-
-    public boolean isApproved() {
-        return isApproved;
-    }
-
-    public void setApproved(boolean approved) {
-        isApproved = approved;
     }
 
     public String getCustomerName() {
@@ -77,15 +66,4 @@ public class Order extends AbstractPersistable<Integer> {
         this.vendorCode = vendorCode;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Order{" +
-//                "quantityOrdered=" + quantityOrdered +
-//                ", isApproved=" + isApproved +
-//                ", customerName='" + customerName + '\'' +
-//                ", customerEMail='" + customerEMail + '\'' +
-//                ", customerAddress='" + customerAddress + '\'' +
-//                ", vendorCode=" + vendorCode +
-//                '}';
-//    }
 }

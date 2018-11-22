@@ -36,12 +36,15 @@ export default class Header extends React.Component {
 							<NavItem eventKey={1} href="#/login">
 								Login
      			 		</NavItem>
-							: <button onClick={() =>
-							 	this.props.authStore.logout()}>Выйти</button>
+							:
+							<NavItem eventKey={1}
+								onClick={() =>
+									this.props.authStore.logout()}>Выйти
+							</NavItem>
 						}
 						<NavItem eventKey={1} href="#/basket">
 							Корзина
-     			 </NavItem>
+     			 		</NavItem>
 					</Nav>
 				</Navbar.Collapse>
 			</Navbar>

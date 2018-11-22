@@ -17,13 +17,17 @@ export default class VendorCodeStore {
 
     @observable
     vcodes = [];
+
+    @observable
+    type = null;
+
 /**
  * Используется для добавления новых товаров из кабинета продавцов
  */
-    addGood(price, quantity, brand, type, ageGender,userId){
+    addGood(price, quantity, brand, type, ageGender,size, userId){
         const params = {
             method: 'POST',
-            body: JSON.stringify(VendorCodeStore.generate(price, quantity, brand, type, ageGender,userId)),
+            body: JSON.stringify(VendorCodeStore.generate(price, quantity, brand, type, ageGender, size, userId)),
             headers: {'Content-Type': 'application/json'}
         };
         fetch(GOODS_URL, params)
@@ -36,16 +40,18 @@ export default class VendorCodeStore {
      * Генарация JSON объекта для передачи в тебе POST запроса
      *
      */
-    static generate(price, quantity, brand, type, ageGender,userId) {
+    static generate(price, quantity, brand, type, ageGender, size,userId) {
         console.log('price: ',price);
         console.log('quantity: ',quantity);
         console.log('brand: ',brand);
         console.log('type: ',type);
         console.log('ageGender: ',ageGender);
         console.log('userId: ',userId);
+        console.log('size: ',size);
         return {
             quantityAvailable: quantity,
             prise: price,
+            size:size,
             brand: {
                 id:brand
             },

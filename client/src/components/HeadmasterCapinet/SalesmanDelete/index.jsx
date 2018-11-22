@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import { inject, observer } from "mobx-react";
+import { Table } from "react-bootstrap"
 
 @inject('userStore')
 @observer
@@ -27,7 +28,7 @@ export default class SalesmanDelete extends React.Component {
         const { users } = this.props.userStore;
         return (
             <div>
-                <table>
+                {/* <table>
                     <tbody>
                     {users.map(({ id, fullName }) => (<tr key={id}>
                         <td>Имя: {fullName || 'Загрузка...'}<br />
@@ -35,10 +36,27 @@ export default class SalesmanDelete extends React.Component {
                             this.props.userStore.delete(id)}>Удалить этого продавца.</button></td>
                     </tr>))}
                     </tbody>
-                </table>
-                <Link to="/welcome">На главную</Link>
+                </table> */}
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Имя собственное</th>
+                            <th>Логин*</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {users.map(({ id, fullName, username }) => (<tr key={id}>
+                            <td>{ fullName }</td>
+                            <td>{ username }</td>
+                            <td> <button onClick={() =>
+                            this.props.userStore.delete(id)}>Удалить этого продавца.</button></td>
+                        </tr>))}
+                    </tbody>
+                </Table>
+                <Link to="/welcome" className='linkStyle'>На главную</Link>
                 <br />
-                <Link to="/headmster">Обратно, в личный кабинет</Link>
+                <Link to="/headmster" className='linkStyle'>Обратно, в личный кабинет</Link>
+                <h6 className='marginLeft'>* - поле должно быть уникальным</h6>
             </div>
         );
     }

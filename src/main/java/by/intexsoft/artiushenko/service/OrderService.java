@@ -62,12 +62,12 @@ public class OrderService {
             MimeMessage mimeMessage = new MimeMessage(session);
             mimeMessage.setFrom(new InternetAddress("intexsoftProject@gmail.com"));
             mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(order.getCustomerEMail()));
-            mimeMessage.setSubject("Ваша заказ подтвержден");
-            mimeMessage.setText("Добрый день! \n" +
-                    "Ваш заказ №"+order.getId()+" подтвержден. \n"+
+            mimeMessage.setSubject("Your order has been approved");
+            mimeMessage.setText("Hi! \n" +
+                    "Your order №"+order.getId()+" has been approved. \n"+
                     "\n"+
-                    "C уважением,\n"+
-                    "Дмитрий Артюшенко"
+                    "Best regards,\n"+
+                    "Artiushenko Dmitry"
             );
 
             Transport transport = session.getTransport();
