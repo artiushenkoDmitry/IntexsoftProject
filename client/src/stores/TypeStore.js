@@ -1,7 +1,7 @@
 import {observable, action} from "mobx";
 
 /**
- * Ссылка на адрес, откуда стоит загружать данные.
+ * Ссылка на адрес для загрузки данных
  * @type {string}
  */
 const CONTEXT_URL = process.env.REACT_APP_API_URL || '';
@@ -16,21 +16,6 @@ export default class TypeStore {
 
     @observable
     types = [];
-
-    // /**
-    //  * Используется для добавления новых пользователей
-    //  */
-    // create() {
-    //     const params = {
-    //         method: 'POST',
-    //         body: JSON.stringify(TypeStore.generate()),
-    //         headers: {'Content-Type': 'application/json'}
-    //     };
-    //     fetch(GOODS_URL, params)
-    //         .then(response => response.json())
-    //         .then(action(type => this.types.push(type)))
-    //         .catch(e => console.log(e));
-    // }
 
     /**
      * Удаление записи из таблицы типов в базе данных.
@@ -77,6 +62,9 @@ export default class TypeStore {
             .catch(error => console.error(error.message));
     }
 
+    /**
+     * Выполняется когда работа с компонентом закончена
+     */
     deselect(){
         this.type = null;
     }

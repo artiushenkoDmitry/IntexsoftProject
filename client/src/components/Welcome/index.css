@@ -1,10 +1,16 @@
 .linkStyle {
-    color: rgb(39, 43, 44);
+    color:#272b2c;
+    border: 3px solid dimgrey;
     text-decoration: none;
-    margin: 10px;
+    padding: 5px;
+    background-color: gray;
+    font-family: fantasy;
+    width: 100%;
+    display: block;
+
   }
   .linkStyle:hover {
-    color: gray;
+    color: black;
     position: relative;
     top: 2px;
     left: 2px;
@@ -19,4 +25,26 @@
 .wite-space-div-text {
   white-space: pre;
 }
-
+.welcomeTable{
+  width: 100%;
+  text-align: center;
+}
+.welcomeTableLeftColumn{
+  width: 20%;
+}
+.welcomeTableLeftColumn>table{
+  width: 100%;
+}
+.typesCol{
+  padding: 2px;
+  display: table-cell;
+  width: 100%;
+}
+.secondaryLink{
+  width: 135px;
+  margin-left: 5px;
+}
+.tertiaryLink{
+  width: 185px;
+  margin-left: 5px;
+}

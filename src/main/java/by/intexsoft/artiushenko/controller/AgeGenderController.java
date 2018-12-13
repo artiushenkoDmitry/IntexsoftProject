@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Контроллер содержащий методы для работы с сущьностью AgeGender
+ * Контроллер содержащий методы для работы с сущностью AgeGender
  */
 @CrossOrigin
 @RestController
@@ -21,7 +21,7 @@ public class AgeGenderController {
     AgeGenderService ageGenderService;
 
     /**
-     * Возвращает список сущьностей ageGender
+     * Возвращает список сущностей ageGender
      */
     @GetMapping
     public List<AgeGender> getAll() {

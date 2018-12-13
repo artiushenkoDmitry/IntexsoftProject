@@ -1,10 +1,12 @@
 import React from "react";
-import { Link } from 'react-router-dom';
 import { inject, observer } from "mobx-react/index";
-import { Form, FormGroup, Col, FormControl } from "react-bootstrap"
+import { Link } from 'react-router-dom';
+import Pagination from "react-js-pagination";
 
-
-@inject('goodStore','orderStore')
+/**
+ * Отображение товаров выбранного типа
+ */
+@inject('goodStore', 'orderStore')
 @observer
 export default class Goods extends React.Component {
     constructor(props) {
@@ -13,6 +15,39 @@ export default class Goods extends React.Component {
         this.address = React.createRef();
         this.email = React.createRef();
         this.quantity = React.createRef();
+        this.state = {
+            activePage: 1
+        };
+
+    }
+
+    /**
+     * Используется для пагинации
+     * @param {*} pageNumber - выбранный номер страницы
+     */
+    handlePageChange(pageNumber) {
+        this.props.goodStore.updateCurrentGoods(pageNumber);
+        this.setState({ activePage: pageNumber });
+    }
+
+    /**
+     * Добавление заказа
+     * @param {*} prise - стоимость единицы продукции
+     * @param {*} quantityAvailable - доступное количество. 
+     * @param {*} name - имя покупателя
+     * @param {*} address - адрес доставки
+     * @param {*} emai - электронный адрес для связи
+     * @param {*} quantity - заказанное количество
+     * @param {*} id - идентификатор артикула
+     * @param {*} size - размер
+     * @param {*} brandName - наименование бренда
+     * @param {*} typeName - тип товара
+     * @param {*} ageGender - категория товара
+     */
+    addOrder(prise, quantityAvailable, name, address, emai, quantity, id, size, brandName, typeName,
+             ageGender){
+        this.props.goodStore.addOrder(prise, quantityAvailable, name, address, emai, quantity, id, 
+            size, brandName, typeName, ageGender);
     }
 
     /**
@@ -30,78 +65,50 @@ export default class Goods extends React.Component {
      */
     render() {
         const { props: { goodStore: { goods } } } = this;
+        const { props: { goodStore: { currentGoods } } } = this;
         const { props: { orderStore: { orders } } } = this;
+        const { props: { goodStore: { itemsOnPage } } } = this;
         return (
-            <div>
-                <Form inline>
-                    <FormGroup /*controlId="formHorizontalEmail"*/>
-                        <Col sm={10}>
-                            <FormControl type="text" inputRef={this.name} placeholder="Введите ваше имя" />
-                        </Col>
-                    </FormGroup>
-
-                    <FormGroup /*controlId="formHorizontalPassword"*/>
-                        <Col sm={10}>
-                            <FormControl type="text" inputRef={this.address} placeholder="Введите адрес" />
-                        </Col>
-                    </FormGroup>
-
-                    <FormGroup /*controlId="formHorizontalPassword"*/>
-                        <Col sm={10}>
-                            <FormControl type="text" inputRef={this.email} placeholder="Введите e-mail" />
-                        </Col>
-                    </FormGroup>
-
-                    <FormGroup /*controlId="formHorizontalPassword"*/>
-                        <Col sm={10}>
-                            <FormControl type="text" inputRef={this.quantity} placeholder="Введите кол-во" />
-                        </Col>
-                    </FormGroup>
-                </Form>
+            <div className='paginatorClass'>
                 <table>
-                    <tr>
-                        <td>
-                <table className='marginLeft'>
                     <tbody>
-                    {goods.map(({ id, prise, quantityAvailable, brand, type, ageGender, size }) => (<tr key={id}>
-                        
-                        {orders.map((order)=>{
-                            id === order.vendorCode.id ? quantityAvailable=quantityAvailable-order.quantityOrdered :null
-                            })}
+                        <tr>
+                            <td>
+                                <table className='marginLeft'>
+                                    <tbody>
+                                        {currentGoods.map(({ id, prise, quantityAvailable, brand, type, ageGender, size }) => (<tr key={id}>
 
-                    <td>Стоимость: {prise || 'Загрузка...'}<br />
-                        Бренд: {brand.brandName || 'Загрузка...'}<br />
-                        Тип: {type.typeName || 'Загрузка...'}<br />
-                        Категория: {ageGender.ageGender || 'Загрузка...'}<br />
-                        Размер: {size || 'Загрузка...'}<br />
-                        Доступное количество: {quantityAvailable || 'Загрузка...'}<br />
-                        <br/>
-                    </td>
-                    <td>
-                        <button onClick={() =>
-                            this.props.goodStore.addOrder(prise,
-                                quantityAvailable,
-                                this.name.current.value,
-                                this.address.current.value,
-                                this.email.current.value,
-                                this.quantity.current.value,
-                                id,
-                                size,
-                                brand.brandName,
-                                type.typeName,
-                                ageGender.ageGender
-                                )}>Добавить в корзину</button></td>
-                    </tr>))}
+                                            {orders.map((order) => {
+                                                id === order.vendorCode.id ? quantityAvailable = quantityAvailable - order.quantityOrdered : null
+                                            })}
+
+                                            <td>Стоимость: {prise || 'Загрузка...'}<br />
+                                                Бренд: {brand.brandName || 'Загрузка...'}<br />
+                                                Тип: {type.typeName || 'Загрузка...'}<br />
+                                                Категория: {ageGender.ageGender || 'Загрузка...'}<br />
+                                                Размер: {size || 'Загрузка...'}<br />
+                                                Доступное количество: {quantityAvailable || 'Загрузка...'}<br />
+                                                <br />
+                                            </td>
+                                            <td><Link to={`/good/${id}`} className='linkStyle'>В корзину</Link></td>
+                                        </tr>))}
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>
+                                <img src="/images/internetShop.png" height="300" alt="" />
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
-                </td>
-                <td>
-                    <img src="/images/internetShop.png" height="300"/>
-                </td>
-                </tr>
-                </table>
-                <Link to="/welcome" className='linkStyle'>На главную</Link>
-                {console.log(JSON.stringify(goods))}
+
+                <Pagination
+                    activePage={this.state.activePage}  
+                    itemsCountPerPage={itemsOnPage}     
+                    totalItemsCount={goods.length}      
+                    pageRangeDisplayed={5}              
+                    onChange={this.handlePageChange.bind(this)}
+                />
             </div>
         );
     }

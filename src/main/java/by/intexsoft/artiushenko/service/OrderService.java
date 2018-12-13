@@ -2,8 +2,7 @@ package by.intexsoft.artiushenko.service;
 
 import by.intexsoft.artiushenko.controller.VendorCodeController;
 import by.intexsoft.artiushenko.entity.Order;
-import by.intexsoft.artiushenko.entity.VendorCode;
-import by.intexsoft.artiushenko.repository.OrderRepository;
+import by.intexsoft.artiushenko.repository.IOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +17,18 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * Сервис описывающий основые методы для работы с сущьностью Order
+ * Сервис описывающий основые методы для работы с сущностью Order
  */
 @Service
 public class OrderService {
     @Autowired
-    OrderRepository orderRepository;
+    IOrderRepository IOrderRepository;
 
     /**
-     * Возвращает список сущьностей order
+     * Возвращает список сущностей order
      */
     public List<Order> findAll(){
-        List<Order> list = orderRepository.findAll();
+        List<Order> list = IOrderRepository.findAll();
         return list;
     }
 
@@ -37,14 +36,14 @@ public class OrderService {
      * Вносит запись в базу данных (в таблицу t_order)
      */
     public Order create(Order order) {
-        return orderRepository.save(order);
+        return IOrderRepository.save(order);
     }
 
     /**
      * Удаляет запись из базы данных (из таблицы t_order)
      */
     public void delete(int id) {
-        orderRepository.deleteById(id);
+        IOrderRepository.deleteById(id);
     }
 
     /**
@@ -64,7 +63,7 @@ public class OrderService {
             mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(order.getCustomerEMail()));
             mimeMessage.setSubject("Your order has been approved");
             mimeMessage.setText("Hi! \n" +
-                    "Your order №"+order.getId()+" has been approved. \n"+
+                    "Your order number: "+order.getId()+" has been approved. \n"+
                     "\n"+
                     "Best regards,\n"+
                     "Artiushenko Dmitry"
@@ -72,18 +71,18 @@ public class OrderService {
 
             Transport transport = session.getTransport();
             transport.connect(null, "Toi3aich");
-            transport.sendMessage(mimeMessage,mimeMessage.getAllRecipients());
+            transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
             transport.close();
         } catch (IOException | MessagingException e) {
             e.printStackTrace();
         }
-        orderRepository.deleteById(id);
+        IOrderRepository.deleteById(id);
     }
     /**
      * Выбирает запись из базы данных (из таблицы t_order) по id
      */
     public Order select(Integer id) {
-        return orderRepository.findById(id).get();
+        return IOrderRepository.findById(id).get();
     }
 
 }

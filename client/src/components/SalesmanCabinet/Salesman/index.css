@@ -1,0 +1,8 @@
+.paginatorClass>ul>li>a {
+    background-color: rgb(212, 212, 212) !important;
+    border-color: white !important;
+    color: black !important;
+}
+.paginatorClass>ul {
+    padding-left:10px;
+}

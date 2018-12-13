@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Контроллер содержащий методы для работы с сущьностью Role
+ * Контроллер содержащий методы для работы с сущностью Role
  */
 @CrossOrigin
 @RestController
@@ -21,7 +21,7 @@ public class RoleController {
     RoleService roleService;
 
     /**
-     * Возвращает список сущьностей role
+     * Возвращает список сущностей role
      */
     @GetMapping
     public List<Role> getAll() {

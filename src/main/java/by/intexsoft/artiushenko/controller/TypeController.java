@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Контроллер содержащий методы для работы с сущьностью Type
+ * Контроллер содержащий методы для работы с сущностью Type
  */
 @CrossOrigin
 @RestController
@@ -21,12 +21,11 @@ public class TypeController {
     TypeService typeService;
 
     /**
-     * Возвращает список сущьностей type
+     * Возвращает список сущностей type
      */
     @GetMapping
     public List<Type> getAll() {
-        List<Type> types = typeService.findAll();
-        return types;
+        return typeService.findAll();
     }
 
     /**
@@ -53,7 +52,6 @@ public class TypeController {
     @CrossOrigin
     @GetMapping("/select/{id}")
     public Type selectOne(@PathVariable("id") int id) {
-        Type type = typeService.select(id);
-        return type;
+        return typeService.select(id);
     }
 }

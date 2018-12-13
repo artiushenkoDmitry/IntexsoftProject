@@ -1,7 +1,7 @@
 package by.intexsoft.artiushenko.service;
 
 import by.intexsoft.artiushenko.entity.User;
-import by.intexsoft.artiushenko.repository.UserRepository;
+import by.intexsoft.artiushenko.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,12 +11,12 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * Сервис описывающий основые методы для работы с сущьностью User
+ * Сервис описывающий основые методы для работы с сущностью User
  */
 @Service
 public class UserService {
     @Autowired
-    UserRepository userRepository;
+    IUserRepository IUserRepository;
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -28,20 +28,14 @@ public class UserService {
      * Для того, чтобы получить id и имя пользователя нужен этот метод.
      */
     public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return IUserRepository.findByUsername(username);
     }
 
-
-//    public User save(User user) {
-//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//        return userRepository.save(user);
-//    }
-
     /**
-     * Возвращает список сущьностей user
+     * Возвращает список сущностей user
      */
     public List<User> findAll() {
-        List<User> list = userRepository.findAll();
+        List<User> list = IUserRepository.findAll();
         return list;
     }
 
@@ -50,21 +44,21 @@ public class UserService {
      */
     public User create(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        return IUserRepository.save(user);
     }
 
     /**
      * Удаляет запись из базы данных (из таблицы t_user)
      */
     public void delete(int id) {
-        userRepository.deleteById(id);
+        IUserRepository.deleteById(id);
     }
 
     /**
      * Выбирает запись из базы данных (из таблицы t_user) по id
      */
     public User select(Integer id) {
-        return userRepository.findById(id).get();
+        return IUserRepository.findById(id).get();
     }
 
     /**
@@ -72,6 +66,6 @@ public class UserService {
      * @param id - идентификатор пользователя
      */
     public List<User> getUserListByRoleId (int id) {
-        return userRepository.getUserListByRoleId(id);
+        return IUserRepository.getUserListByRoleId(id);
     }
 }

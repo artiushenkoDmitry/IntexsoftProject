@@ -1,8 +1,6 @@
 package by.intexsoft.artiushenko.controller;
 
-import by.intexsoft.artiushenko.entity.Role;
 import by.intexsoft.artiushenko.entity.User;
-import by.intexsoft.artiushenko.service.RoleService;
 import by.intexsoft.artiushenko.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,11 +33,11 @@ public class UserController {
      */
     @GetMapping("/findByUsername/{username}")
     public User findByUsername(@PathVariable("username")String username) {
-       return userService.findByUsername(username);
+    return userService.findByUsername(username);
     }
 
     /**
-     * Возвращает список сущьностей user
+     * Возвращает список сущностей user
      */
     @GetMapping
     public List<User> getAll() {

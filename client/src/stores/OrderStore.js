@@ -1,10 +1,8 @@
 import { observable, action } from "mobx";
 
 /**
- * Ссылка адрес, откуда стоит загружать данные.
- * @type {string}
+ * Ссылка на адрес для загрузки данных
  */
-//const GOODS_URL = 'http://127.0.0.1:8080/internet/api/';
 const CONTEXT_URL = process.env.REACT_APP_API_URL || '';
 const ORDER_URL = CONTEXT_URL + 'api/order';
 
@@ -18,8 +16,28 @@ export default class OrderStore {
     @observable
     orders = [];
 
+    /**
+     * Массив заказов хранимый в рамках одной сессии
+     */
+    @observable
+    currentSessionOrders = [];
+
+    /**
+     * Заказы отображаемые на одной странице. Используется для пагинации.
+     */
     @observable
     currentOrders = [];
+    /**
+    * Количество заказов отображаемых на одной странице. Используется для пагинации.
+    */
+    itemsOnPage = 4;
+
+    /**
+    * Используется для изменения списка элементов отображаемых на странице при пагинации.
+    */
+    updateCurrentOrders(pageNumber){
+        this.currentOrders = this.orders.slice(pageNumber*this.itemsOnPage-this.itemsOnPage, pageNumber*this.itemsOnPage);
+    }
 
     /**
      * Метод обновляет запись в таблице артикулов. Вызывается когда продаваец подтвердил заказ.
@@ -39,7 +57,7 @@ export default class OrderStore {
             body: JSON.stringify(OrderStore.generate(id, newQuantityAvailable, quantityOrdered, newPrise, newBrand, newType, newAgeGender, newUser)),
             headers: { 'Content-Type': 'application/json' }
         };
-        fetch(CONTEXT_URL + 'api/approveOrder', params)
+        fetch(CONTEXT_URL + 'api/vendorCode/approveOrder', params)
             .then(response => response.json())
             .then(() => this.deleteAndSendMessage(orderId))
             .catch(e => console.log(e));
@@ -51,14 +69,6 @@ export default class OrderStore {
      */
     static generate(newId, newQuantityAvailable, quantityOrdered, newPrise, newBrand, newType, newAgeGender, newUser) {
         newQuantityAvailable = newQuantityAvailable - quantityOrdered;
-        console.log('пришли в метод generate');
-        console.log('newId: ', newId);
-        console.log('newQuantityAvailable: ', newQuantityAvailable);
-        console.log('newPrise: ', newPrise);
-        console.log('newBrand: ', newBrand);
-        console.log('newType: ', newType);
-        console.log('newAgeGender: ', newAgeGender);
-        console.log('newUser: ', newUser);
         return {
             id: newId,
             quantityAvailable: newQuantityAvailable,
@@ -110,6 +120,10 @@ export default class OrderStore {
         if (itemIndex > -1) {
             this.orders.splice(itemIndex, 1);
         }
+        const currentItemIndex = this.currentOrders.findIndex(({ id }) => id === identity);
+        if (currentItemIndex > -1) {
+            this.currentOrders.splice(currentItemIndex, 1);
+        }
     }
 
     /**
@@ -118,8 +132,12 @@ export default class OrderStore {
     loadAll() {
         fetch(ORDER_URL)
             .then(response => response.json())
-            .then(action(orders => {this.orders = orders}))
+            .then(action((orders) => {
+                this.orders = orders;
+                this.updateCurrentOrders(1);
+            }))
             .catch(error => console.error(error.message))
+
     }
 
     /**
@@ -127,8 +145,8 @@ export default class OrderStore {
      */
     loadCurrentUserOrders() {
         sessionStorage.getItem('orders') ?
-        action(this.currentOrders = JSON.parse(sessionStorage.getItem('orders')))
-        : this.currentOrders = [];
+        action(this.currentSessionOrders = JSON.parse(sessionStorage.getItem('orders')))
+        : this.currentSessionOrders = [];
     }
 
     /**
@@ -140,7 +158,10 @@ export default class OrderStore {
             .then(action(order => this.order = order))
             .catch(error => console.error(error.message))
     }
-
+    
+    /**
+     * Выполняется когда работа с компонентом закончена
+     */
     deselect() {
         this.order = null;
     }

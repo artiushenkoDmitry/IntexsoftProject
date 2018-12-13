@@ -11,7 +11,7 @@ import javax.management.Query;
 import java.util.List;
 
 /**
- * Контроллер содержащий методы для работы с сущьностью Order
+ * Контроллер содержащий методы для работы с сущностью Order
  */
 @CrossOrigin
 @RestController
@@ -22,7 +22,7 @@ public class OrderController {
     OrderService orderService;
 
     /**
-     * Возвращает список сущьностей order
+     * Возвращает список сущностей order
      */
     @GetMapping
     public List<Order> getAll() {

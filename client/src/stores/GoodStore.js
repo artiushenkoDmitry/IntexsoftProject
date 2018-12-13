@@ -1,24 +1,38 @@
 import { observable, action } from "mobx";
 
 /**
- * Ссылка на адрес, откуда стоит загружать данные.
- * @type {string}
+ * Ссылка на адрес для загрузки данных
  */
-//const GOODS_URL = 'http://127.0.0.1:8080/internet/api/';
 const CONTEXT_URL = process.env.REACT_APP_API_URL || '';
-const GOODS_URL = CONTEXT_URL + 'api/getVcodesByType';
+const GOODS_URL = CONTEXT_URL + 'api/vendorCode/getVcodesByType';
+const GOOD_URL = CONTEXT_URL + 'api/vendorCode';
 const ORDER_URL = CONTEXT_URL + 'api/order';
 
 /**
  * Является экспортируемым классом и используется в index.js .
  */
 export default class GoodStore {
+    /**
+     * Текущий товар выбранный пользователем
+     */
     @observable
     good = null;
 
+    /**
+     * Список товаров выбранного типа
+     */
     @observable
     goods = [];
 
+    /**
+     * Список товаров отображаемый на экране. Используется при пагинации
+     */
+    @observable
+    currentGoods = [];
+
+    /**
+     * Текущий заказ пользователя
+     */
     @observable
     currentUserOrder = null;
 
@@ -28,9 +42,17 @@ export default class GoodStore {
     @observable
     currentUserOrders = [];
 
-    // addOrderToSessionStorage(order) {
-    //     sessionStorage.setItem('order', order);
-    // }
+    /**
+     * Количество товаров отображаемых на одной странице. Используется для пагинации.
+     */
+    itemsOnPage = 4;
+
+    /**
+    * Используется для изменения списка элементов отображаемых на странице при пагинации.
+    */
+    updateCurrentGoods(pageNumber){
+        this.currentGoods = this.goods.slice(pageNumber*this.itemsOnPage-this.itemsOnPage, pageNumber*this.itemsOnPage);
+    }
 
     /**
      * Добавляет заказ в базу данных и в SessionStorage. Если заказанное количество превышает доступное - появляется соответствующее сообщение
@@ -51,7 +73,10 @@ export default class GoodStore {
             fetch(ORDER_URL, params)
                 .then((response) => response.json())
                 .then(action((order) =>
-                    this.generateOrderForSession(size, name, address, email, quantity, prise, brand, type, ageGender, order.id)))
+                    {this.generateOrderForSession(size, name, address, email, quantity, prise, brand, type, ageGender, order.id);
+                    alert('Ваш заказ добавлен в корзину');
+                    window.history.back();
+                }))
                 .catch(e => console.log(e));
         } else {
             alert('Заказанное количество превышает доступное.')
@@ -89,7 +114,9 @@ export default class GoodStore {
     }
 
     /**
-     * Загрузка данных по запросу.
+     * Загрузка данных по запросу. Если в sessionStorage список заказов пуст, то список 
+     * currentUserOrders очищается.
+     * 
      */
     loadAll(id) {
         sessionStorage.getItem('orders') ?
@@ -98,7 +125,10 @@ export default class GoodStore {
 
         fetch(GOODS_URL + '/' + id)
             .then(response => response.json())
-            .then(action(goods => this.goods = goods))
+            .then(action((goods) => {
+                this.goods = goods;
+                this.updateCurrentGoods(1);
+            }))
             .catch(error => console.error(error.message))
     }
 
@@ -107,15 +137,12 @@ export default class GoodStore {
      * @param identity
      */
     load(identity) {
-        fetch(GOODS_URL + 'select/' + identity)
+        fetch(GOOD_URL + '/select/' + identity)
             .then(response => response.json())
             .then(action(good => this.good = good))
-            .catch(error => console.error(error.message))
+            .catch(error => console.error(error.message));
     }
 
-    deselect() {
-        this.good = null;
-    }
     /**
      * Генарация JSON объекта для передачи в тебе POST запроса
          * @param {*} name - имя заказчика
@@ -125,11 +152,6 @@ export default class GoodStore {
          * @param {*} id - идентификатор артикула
      */
     static generate(name, address, email, quantity, id) {
-        console.log('имя', name);
-        console.log('адрес', address);
-        console.log('мыло', email);
-        console.log('кол-во', quantity);
-        console.log('id', id);
         return {
             "quantityOrdered": quantity,
             "isApproved": false,
@@ -142,5 +164,11 @@ export default class GoodStore {
         };
     }
 
+    /**
+     * Выполняется когда работа с компонентом закончена
+     */
+    deselect() {
+        this.good = null;
+    }
 }
 

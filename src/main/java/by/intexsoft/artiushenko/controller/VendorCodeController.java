@@ -19,11 +19,11 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * Контроллер содержащий методы для работы с сущьностью VendorCode
+ * Контроллер содержащий методы для работы с сущностью VendorCode
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/")
+@RequestMapping("/vendorCode")
 public class VendorCodeController {
     private static Logger log = LoggerFactory.getLogger(RoleController.class);
     @Autowired
@@ -48,11 +48,10 @@ public class VendorCodeController {
     }
 
     /**
-     * Возвращает список сущьностей vendorCode
+     * Возвращает список сущностей vendorCode
      */
     @GetMapping
     public List<VendorCode> getAll() {
-
         List<VendorCode> vendorCodes = vendorCodeService.findAll();
         return vendorCodes;
     }

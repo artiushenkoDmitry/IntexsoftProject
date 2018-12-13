@@ -1,25 +1,25 @@
 package by.intexsoft.artiushenko.service;
 
 import by.intexsoft.artiushenko.entity.AgeGender;
-import by.intexsoft.artiushenko.repository.AgeGenderRepository;
+import by.intexsoft.artiushenko.repository.IAgeGenderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * Сервис описывающий основые методы для работы с сущьностью AgeGender
+ * Сервис описывающий основые методы для работы с сущностью AgeGender
  */
 @Service
 public class AgeGenderService {
     @Autowired
-    AgeGenderRepository ageGenderRepository;
+    IAgeGenderRepository IAgeGenderRepository;
 
     /**
-     * Возвращает список сущьностей ageGender
+     * Возвращает список сущностей ageGender
      */
     public List<AgeGender> findAll(){
-        List<AgeGender> list = ageGenderRepository.findAll();
+        List<AgeGender> list = IAgeGenderRepository.findAll();
         return list;
     }
 
@@ -27,21 +27,21 @@ public class AgeGenderService {
      * Вносит запись в базу данных (в таблицу t_age_gender)
      */
     public AgeGender create(AgeGender ageGender) {
-        return ageGenderRepository.save(ageGender);
+        return IAgeGenderRepository.save(ageGender);
     }
 
     /**
      * Удаляет запись из базы данных (из таблицы t_age_gender)
      */
     public void delete(int id) {
-        ageGenderRepository.deleteById(id);
+        IAgeGenderRepository.deleteById(id);
     }
 
     /**
      * Выбирает запись из базы данных (из таблицы t_age_gender) по id
      */
     public AgeGender select(Integer id) {
-        return ageGenderRepository.findById(id).get();
+        return IAgeGenderRepository.findById(id).get();
     }
 
 }

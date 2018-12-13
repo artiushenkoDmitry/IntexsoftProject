@@ -3,6 +3,9 @@ import { inject, observer } from "mobx-react/index";
 import { withRouter } from 'react-router-dom';
 import { Navbar, Nav, NavItem } from "react-bootstrap"
 
+/**
+ * Хедер
+ */
 @withRouter
 @inject('authStore')
 @observer

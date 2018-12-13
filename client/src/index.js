@@ -10,13 +10,18 @@ import VendorCodeStore from './stores/VendorCodeStore';
 import AuthStore from './stores/AuthStore';
 import TypeStore from './stores/TypeStore';
 import OrderStore from './stores/OrderStore';
+import AgeGenderStore from './stores/AgeGenderStore';
+import BrandStore from './stores/BrandStore';
 
 const stores = {goodStore: new GoodStore(),
                 userStore: new UserStore(), 
                 vendorCodeStore: new VendorCodeStore(),
                 authStore: new AuthStore(),
                 typeStore: new TypeStore(),
-                orderStore: new OrderStore()};
+                orderStore: new OrderStore(),
+                ageGenderStore: new AgeGenderStore(),
+                brandStore: new BrandStore()
+            };
 
 ReactDOM.render(
     <Provider {...stores}>

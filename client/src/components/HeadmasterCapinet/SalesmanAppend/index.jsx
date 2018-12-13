@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { inject, observer } from "mobx-react/index";
 import { Form, FormGroup, Col, FormControl, Table } from "react-bootstrap"
 
+/**
+ * Кабинет директора с возможностью добавления продавцов
+ */
 @inject('userStore')
 @observer
 export default class Headmaster extends React.Component {
@@ -26,7 +29,7 @@ export default class Headmaster extends React.Component {
      * @param {*} pass - пароль
      */
     addSalesman(name, login, pass) {
-        this.props.userStore.create(name, login, pass);
+        this.props.userStore.isSalesmanAbsent(name, login, pass);
     }
 
     /**
@@ -51,32 +54,30 @@ export default class Headmaster extends React.Component {
                     </tbody>
                 </Table>
                 <Form inline>
-                    <FormGroup controlId="formHorizontalEmail">
+                    <FormGroup controlId="formBasicText">
                         <Col sm={10}>
                             <FormControl type="text" inputRef={this.name} placeholder="Введите имя продавца" />
                         </Col>
                     </FormGroup>
 
-                    <FormGroup controlId="formHorizontalPassword">
+                    <FormGroup controlId="formBasicText">
                         <Col sm={10}>
                             <FormControl type="text" inputRef={this.login} placeholder="Введите login" />
                         </Col>
                     </FormGroup>
 
-                    <FormGroup controlId="formHorizontalPassword">
+                    <FormGroup controlId="formBasicText">
                         <Col sm={10}>
                             <FormControl type="text" inputRef={this.pass} placeholder="Введите пароль" />
                         </Col>
                     </FormGroup>
                 </Form>
                 <br/>
-                <button onClick={() =>
+                <button className='tertiaryLink' onClick={() =>
                     this.addSalesman(this.name.current.value, this.login.current.value, this.pass.current.value)}>Добавить продавца</button>
                 <br />
                 <br/>
-                <Link to="/welcome" className='linkStyle'>На главную</Link>
-                <br />
-                <Link to="/headmster" className='linkStyle'>Обратно, в личный кабинет</Link>
+                <Link to="/headmster" className='linkStyle tertiaryLink'>Обратно, в личный кабинет</Link>
             </div>
         );
     }

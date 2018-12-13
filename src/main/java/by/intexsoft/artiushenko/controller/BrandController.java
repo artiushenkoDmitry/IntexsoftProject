@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Контроллер содержащий методы для работы с сущьностью Brand
+ * Контроллер содержащий методы для работы с сущностью Brand
  */
 @CrossOrigin
 @RestController
@@ -21,7 +21,7 @@ public class BrandController {
     BrandService brandService;
 
     /**
-     * Возвращает список сущьностей Brand
+     * Возвращает список сущностей Brand
      */
     @GetMapping
     public List<Brand> getAll() {

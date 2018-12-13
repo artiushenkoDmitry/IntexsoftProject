@@ -1,7 +1,7 @@
 import {observable, action} from "mobx";
 
 /**
- * Ссылка на адрес, откуда стоит загружать данные.
+ * Ссылка на адрес для загрузки данных
  */
 const CONTEXT_URL = process.env.REACT_APP_API_URL || '';
 const GOODS_URL = CONTEXT_URL + 'api/user';
@@ -10,11 +10,33 @@ const GOODS_URL = CONTEXT_URL + 'api/user';
  * Является экспортируемым классом и используется в index.js .
  */
 export default class UserStore {
+    /**
+     * Пользователь
+     */
     @observable
     user = null;
 
+    /**
+     * Список пользователей
+     */
     @observable
     users = [];
+
+    /**
+     * Метод проверяет уникальность логина перед создание нового продавца
+     */
+    isSalesmanAbsent(name, login, pass){
+        fetch(GOODS_URL+'/findByUsername/'+login)
+        .then((responce) => {
+            return responce.text();
+        })
+        .then((result)=>{
+            result.length === 0 ?
+            this.create(name, login, pass)
+            : alert('Новый продавец не был зарегистрирован. Логин должен быть уникальным'); 
+        })
+        .catch(error => console.error(error.message))
+    }
 
     /**
      * Возвращает список пользователей в зависимости от их роли
@@ -26,17 +48,6 @@ export default class UserStore {
         .then(action(users => this.users = users))
         .catch(error => console.error(error.message))
     }
-
-    // /**
-    //  * 
-    //  * @param {*} name 
-    //  * @param {*} address 
-    //  */
-    // addOrder(name, address){
-    //     console.log('name: ',name);
-    //     console.log('address: ',address);
-    // }
-
 
     /**
      * Используется для добавления новых пользователей
@@ -54,13 +65,10 @@ export default class UserStore {
     }
 
     /**
-     *Генарация JSON объекта для передачи в тебе POST запроса
+     *Генарация JSON объекта для передачи в теле POST запроса
      *
      */
     static generate(name, login, pass) {
-        console.log(name);
-        console.log(login);
-        console.log(pass);
         return {
             "fullName": name,
             "username": login,
@@ -116,6 +124,9 @@ export default class UserStore {
             .catch(error => console.error(error.message))
     }
 
+    /**
+     * Выполняется когда работа с компонентом закончена
+     */
     deselect(){
         this.user = null;
     }

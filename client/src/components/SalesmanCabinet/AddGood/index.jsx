@@ -1,10 +1,13 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import { inject, observer } from "mobx-react";
-import { Form, FormGroup, Col, FormControl, ButtonToolbar, DropdownButton, MenuItem } from "react-bootstrap"
+import { Form, FormGroup, Col, FormControl, DropdownButton, MenuItem } from "react-bootstrap"
 import "./index.css";
 
-@inject('vendorCodeStore')
+/**
+ * Кабинет продавца с возможностью добавления товара
+ */
+@inject('vendorCodeStore', 'typeStore', 'ageGenderStore', 'brandStore')
 @observer
 export default class AddGood extends React.Component {
     constructor(props) {
@@ -15,6 +18,16 @@ export default class AddGood extends React.Component {
         this.type = React.createRef();
         this.ageGender = React.createRef();
         this.size = React.createRef();
+    }
+
+    /**
+    * Метод срабатывает при загрузке компонента. Загружает список заказов и товаров соответствующего 
+    * типа.
+    */
+    componentDidMount() {
+        this.props.typeStore.loadAll();
+        this.props.ageGenderStore.loadAll();
+        this.props.brandStore.loadAll();
     }
 
     /**
@@ -36,54 +49,83 @@ export default class AddGood extends React.Component {
      */
     addGood(price, quantity, brand, type, ageGender, size, userId) {
         this.props.vendorCodeStore.addGood(price, quantity, brand, type, ageGender, size, userId);
+        this.props.brandStore.deselect();
+        this.props.typeStore.deselect();
+        this.props.ageGenderStore.deselect();
     }
     /**
      * отрисовка дропбоксов и полей ввода для заполнения информации о новом продукте
      */
     render() {
-        // const { vcode } = this.props.vendorCodeStore;
-        const { type } = this.props.vendorCodeStore;
+        const { type } = this.props.typeStore;
+        const { brand } = this.props.brandStore;
+        const { ageGender } = this.props.ageGenderStore;
+        const { types } = this.props.typeStore;
+        const { ageGenders } = this.props.ageGenderStore;
+        const { brands } = this.props.brandStore;
         return (
             <div>
+
                 <Form inline>
-                    <FormGroup controlId="formHorizontalEmail">
+                    <FormGroup controlId="formBasicText">
                         <Col sm={10}>
-                            <FormControl type="text" inputRef={this.price} placeholder="Введите стоимость" />
+                            Стоимость:<FormControl type="text" inputRef={this.price} placeholder="Введите стоимость" />
                         </Col>
                     </FormGroup>
-                    <FormGroup controlId="formHorizontalPassword">
+                    <FormGroup controlId="formBasicText">
                         <Col sm={10}>
-                            <FormControl type="text" inputRef={this.quantity} placeholder="Введите количество" />
+                            Количество:<FormControl type="text" inputRef={this.quantity} placeholder="Введите количество" />
                         </Col>
                     </FormGroup>
-                    <FormGroup controlId="formHorizontalPassword">
+                    <FormGroup controlId="formBasicText">
                         <Col sm={10}>
-                            <FormControl type="text" inputRef={this.size} placeholder="Укажите размер" />
+                            Размер:<FormControl type="text" inputRef={this.size} placeholder="Укажите размер" />
                         </Col>
                     </FormGroup>
                 </Form>
                 <br />
-                <ButtonToolbar className='paddingLeft'>
-                    <DropdownButton title="Бренд" /*id="dropdown-size-medium"*/ onSelect={(evt) => { this.brand = evt; console.log(this.brand) }}>
-                        <MenuItem eventKey="1">adidas</MenuItem>
-                        <MenuItem eventKey="2">BOSS</MenuItem>
-                        <MenuItem eventKey="3">Bvlgari</MenuItem>
-                        <MenuItem eventKey="4">BELARUSACHKA</MenuItem>
-                    </DropdownButton>
-                    <DropdownButton title="Тип" /*id="dropdown-size-medium"*/ onSelect={(evt) => { this.type = evt; console.log(this.type) }}>
-                        <MenuItem eventKey="1">Туфли</MenuItem>
-                        <MenuItem eventKey="2">Джинсы</MenuItem>
-                        <MenuItem eventKey="3">Рубашка</MenuItem>
-                        <MenuItem eventKey="4">Спортивная одежда</MenuItem>
-                    </DropdownButton>
-                    <DropdownButton title="Категория" /*id="dropdown-size-medium"*/ onSelect={(evt) => { this.ageGender = evt; console.log(this.ageGender) }}>
-                        <MenuItem eventKey="1">Одежда для мальчиков</MenuItem>
-                        <MenuItem eventKey="2">Одежда для девочек</MenuItem>
-                        <MenuItem eventKey="3">Мужская одежда</MenuItem>
-                        <MenuItem eventKey="4">Женская одежда</MenuItem>
-                    </DropdownButton>
-                </ButtonToolbar>
-                <br />
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td className='dropDownPadding'>
+                                <DropdownButton title="Бренд" id="dropdown-size-medium" onSelect={(evt) => { 
+                                    this.brand = evt; 
+                                    this.props.brandStore.load(evt);
+                                }}>
+                                {brands.map(({ id, brandName }) => (
+                                    <MenuItem eventKey={id} key={id}>{brandName}</MenuItem>
+                                ))}
+                                </DropdownButton>
+                            </td>
+                            <td className='dropDownPadding'>
+                                <DropdownButton title="Тип" id="dropdown-size-medium" onSelect={(evt) => { 
+                                    this.type = evt; 
+                                    this.props.typeStore.load(evt);
+                                }}>
+                                {types.map(({ id, typeName }) => (
+                                    <MenuItem eventKey={id} key={id}>{typeName}</MenuItem>
+                                ))}
+                                </DropdownButton>
+                            </td>
+                            <td className='dropDownPadding'>
+                                <DropdownButton title="Категория" id="dropdown-size-medium" onSelect={(evt) => { 
+                                    this.ageGender = evt; 
+                                    this.props.ageGenderStore.load(evt);
+                                }}>
+                                {ageGenders.map(({ id, ageGender }) => (
+                                    <MenuItem eventKey={id} key={id}>{ageGender}</MenuItem>
+                                ))}
+                                </DropdownButton>
+                            </td>
+                        </tr>
+                        <tr>
+                        <td className = 'allignTextUnderDropDown'>{brand && brand.brandName||''}</td>
+                        <td className = 'allignTextUnderDropDown'>{type && type.typeName||''}</td>
+                        <td className = 'allignTextUnderDropDown'>{ageGender && ageGender.ageGender||''}</td>
+                        </tr>
+                    </tbody>
+                </table>
                 <button className='marginLeft' onClick={() =>
                     this.addGood(this.price.current.value,
                         this.quantity.current.value,
@@ -93,12 +135,9 @@ export default class AddGood extends React.Component {
                         this.size.current.value,
                         sessionStorage.getItem('userId'))}>Создать продукт</button>
                 <br />
-
-                {/*this.size != null ? this.size  || 'Загрузка...' : null*/}
                 <br />
-                <Link to="/salesman" className='linkStyle'>Обратно, в кабинет</Link>
+                <Link to="/salesman" className='linkStyle tertiaryLink'>Обратно, в кабинет</Link>
                 <br />
-                <Link to="/welcome" className='linkStyle'>На главную</Link>
             </div>
         );
     }

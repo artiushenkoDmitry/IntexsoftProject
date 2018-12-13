@@ -1,14 +1,33 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import { inject, observer } from "mobx-react/index";
+import "./index.css";
+import Pagination from "react-js-pagination";
 
+/**
+ * Кабинет продавца с возможностью работы с заказами
+ */
 @inject('orderStore')
 @observer
 export default class Salesman extends React.Component {
     constructor(props) {
         super(props)
         this.newQuantityavailable = React.createRef();
+
+        this.state = {
+            activePage: 1
+          };
     }
+
+    /**
+     * Обрабатывает список заказов при пагинации
+     * @param {*} pageNumber 
+     */
+    handlePageChange(pageNumber) {
+        this.props.orderStore.updateCurrentOrders(pageNumber);
+        this.setState({activePage: pageNumber});
+    }
+
     /**
      * Удаляет указанный по id элемент.
      * @param id - идентификатор поля.
@@ -43,12 +62,14 @@ export default class Salesman extends React.Component {
      */
     render() {
         const { props: { orderStore: { orders } } } = this;
+        const { props: { orderStore: { currentOrders } } } = this;
+        const { props: { orderStore: { itemsOnPage } } } = this;
         return (
-            <div>
+            <div className='paginatorClass'>
                 <center><h2>Добрый день, {sessionStorage.getItem('userFullName')}.</h2></center>
                 <table className='marginLeft'>
                     <tbody>
-                    {orders.map(({ id, quantityOrdered, customerName, customerEMail, customerAddress, vendorCode, user }) => (
+                    {currentOrders.map(({ id, quantityOrdered, customerName, customerEMail, customerAddress, vendorCode, user }) => (
                     <tr key={id}>
                     <td>
                      {vendorCode.user.id == sessionStorage.getItem('userId') || sessionStorage.getItem('userId')==1
@@ -83,9 +104,16 @@ export default class Salesman extends React.Component {
                     </tr>))}
                     </tbody>
                 </table>
-                <Link to="/addGood" className='linkStyle'>Добавить продукцию</Link>
+                <Pagination
+                activePage={this.state.activePage}  //страница по умолчанию
+                itemsCountPerPage={itemsOnPage}               //количество элементов на странице
+                totalItemsCount={orders.length}      //общее количество элементов
+                pageRangeDisplayed={5}              //количество цифр в "переключателе"
+                onChange={this.handlePageChange.bind(this)}
+                />
+                <br/>
+                <Link to="/addGood" className='linkStyle tertiaryLink'>Добавить продукцию</Link>
                 <br />
-                <Link to="/welcome" className='linkStyle'>На главную</Link>
             </div>
         );
     }

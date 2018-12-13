@@ -2,6 +2,9 @@ import React from "react";
 import { inject, observer } from "mobx-react/index";
 import {Form, FormGroup, Col, FormControl, ControlLabel, Button} from "react-bootstrap"
 
+/**
+ * Отображение логин-формы
+ */
 @inject('authStore')
 @observer
 export default class Login extends React.Component {
@@ -20,11 +23,10 @@ export default class Login extends React.Component {
      * Отрисовка полей ввода логина и пароля. 
      */
     render() {
-        // const {props: {authStore: {userFromDataBase}}} = this;
         return (
             <div>
                 <Form horizontal>
-                    <FormGroup controlId="formHorizontalEmail">
+                    <FormGroup controlId="formBasicText">
                         <Col componentClass={ControlLabel} sm={2}>
                             Username
                         </Col>

@@ -1,25 +1,25 @@
 package by.intexsoft.artiushenko.service;
 
 import by.intexsoft.artiushenko.entity.Type;
-import by.intexsoft.artiushenko.repository.TypeRepository;
+import by.intexsoft.artiushenko.repository.ITypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * Сервис описывающий основые методы для работы с сущьностью Type
+ * Сервис описывающий основые методы для работы с сущностью Type
  */
 @Service
 public class TypeService {
     @Autowired
-    TypeRepository typeRepository;
+    ITypeRepository ITypeRepository;
 
     /**
-     * Возвращает список сущьностей type
+     * Возвращает список сущностей type
      */
     public List<Type> findAll(){
-        List<Type> list = typeRepository.findAll();
+        List<Type> list = ITypeRepository.findAll();
         return list;
     }
 
@@ -27,24 +27,20 @@ public class TypeService {
      * Вносит запись в базу данных (в таблицу t_type)
      */
     public Type create(Type type) {
-        return typeRepository.save(type);
+        return ITypeRepository.save(type);
     }
 
     /**
      * Удаляет запись из базы данных (из таблицы t_type)
      */
     public void delete(int id) {
-        typeRepository.deleteById(id);
+        ITypeRepository.deleteById(id);
     }
 
     /**
      * Выбирает запись из базы данных (из таблицы t_type) по id
      */
     public Type select(Integer id) {
-        return typeRepository.findById(id).get();
+        return ITypeRepository.findById(id).get();
     }
-
-//    public String getTest(){
-//        return typeRepository.sel();
-//    }
 }

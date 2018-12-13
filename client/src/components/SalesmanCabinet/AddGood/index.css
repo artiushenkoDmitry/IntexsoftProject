@@ -1,3 +1,7 @@
-.paddingLeft{
-    padding-left: 20px;
+.dropDownPadding{
+    padding: 20px;
+}
+.allignTextUnderDropDown{
+    text-align:  center;
+    padding-bottom: 20px;
 }

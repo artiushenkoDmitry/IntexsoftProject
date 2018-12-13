@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { inject, observer } from "mobx-react";
 import { Table } from "react-bootstrap"
 
+/**
+ * Кабинет директора с возможностью удаления продавцов
+ */
 @inject('userStore')
 @observer
 export default class SalesmanDelete extends React.Component {
@@ -11,9 +14,9 @@ export default class SalesmanDelete extends React.Component {
      * Принимает параметр id и вызывает метод getUserListByRoleId с параметром id
      */
     componentDidMount() {
-        // const id =  this.props.match.params.id;
         this.props.userStore.getUserListByRoleId(1);
     }
+
     /**
      * Зарезервированный метод. 
      * Вызывает метод deselect
@@ -21,6 +24,7 @@ export default class SalesmanDelete extends React.Component {
     componentWillUnmount() {
         this.props.userStore.deselect();
     }
+
     /**
      * Отрисовывает список продавцов с возможностью их удаления
      */
@@ -28,15 +32,6 @@ export default class SalesmanDelete extends React.Component {
         const { users } = this.props.userStore;
         return (
             <div>
-                {/* <table>
-                    <tbody>
-                    {users.map(({ id, fullName }) => (<tr key={id}>
-                        <td>Имя: {fullName || 'Загрузка...'}<br />
-                        <button onClick={() =>
-                            this.props.userStore.delete(id)}>Удалить этого продавца.</button></td>
-                    </tr>))}
-                    </tbody>
-                </table> */}
                 <Table>
                     <thead>
                         <tr>
@@ -53,9 +48,7 @@ export default class SalesmanDelete extends React.Component {
                         </tr>))}
                     </tbody>
                 </Table>
-                <Link to="/welcome" className='linkStyle'>На главную</Link>
-                <br />
-                <Link to="/headmster" className='linkStyle'>Обратно, в личный кабинет</Link>
+                <Link to="/headmster" className='linkStyle tertiaryLink'>Обратно, в личный кабинет</Link>
                 <h6 className='marginLeft'>* - поле должно быть уникальным</h6>
             </div>
         );
